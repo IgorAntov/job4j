@@ -6,7 +6,8 @@
 * Main.
 * @param args -args.
 */
-package iru.job4j;
+
+package ru.job4j;
 
 public class Calculate {
 	
