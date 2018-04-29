@@ -9,14 +9,15 @@ import static org.junit.Assert.assertThat;
 /**
  * Test.
  *
- * @author Petr Arsentev (parsentev@yandex.ru)
+ * @author Igor Antropov
  * @version $Id$
  * @since 0.1
  */
 public class CalculateTest {
     /**
      * Test echo.
-     */ @Test
+     */
+    @Test
     public void whenTakeNameThenTreeEchoPlusName() {
         String input = "Igor Antropov";
         String expect = "Echo, echo, echo : Igor Antropov";
