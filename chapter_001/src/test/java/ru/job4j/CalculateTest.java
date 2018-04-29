@@ -17,6 +17,7 @@ public class CalculateTest {
     /**
      * Test echo.
      */
+
     @Test
     public void whenTakeNameThenTreeEchoPlusName() {
         String input = "Igor Antropov";
