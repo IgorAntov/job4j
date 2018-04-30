@@ -14,14 +14,14 @@ import static org.junit.Assert.*;
 public class FactorialTest {
 
     @Test
-    public void FactorialOfTenThenOne(){
+    public void factorialOfTenThenOne() {
         Factorial fact = new Factorial();
         int result = fact.calc(5);
         assertThat(result, is(120));
     }
 
     @Test
-    public void FactorialOfZiroThenOneHundreedTwenty(){
+    public void factorialOfZiroThenOneHundreedTwenty() {
         Factorial fact = new Factorial();
         int result = fact.calc(0);
         assertThat(result, is(1));
