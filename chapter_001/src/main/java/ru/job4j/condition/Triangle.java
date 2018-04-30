@@ -60,7 +60,7 @@ public class Triangle {
      * @return существование треугольника
      */
     private boolean exist(double ab, double ac, double bc) {
-        return ((ab > 0) && (ac > 0) && (bc > 0)) ? true : false;
+        return ab + ac > bc && ab + bc > ac && ac + bc > ab ? true : false;
     }
 }
 
