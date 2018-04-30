@@ -28,21 +28,21 @@ public class MaxTest {
     @Test
     public void whenSecondLessFirstAndThirdButFirstLessThird() {
         Max maxim = new Max();
-        int result = maxim.max(3, 2,5);
+        int result = maxim.max(3, 2, 5);
         assertThat(result, is(5));
     }
 
     @Test
     public void whenFirstLessSecondAndThirdButThirdLessSecond() {
         Max maxim = new Max();
-        int result = maxim.max(3, 6,5);
+        int result = maxim.max(3, 6, 5);
         assertThat(result, is(6));
     }
 
     @Test
     public void whenThirdLessFirstAndSecondButSecondLessThird() {
         Max maxim = new Max();
-        int result = maxim.max(8, 2,4);
+        int result = maxim.max(8, 2, 4);
         assertThat(result, is(8));
     }
 }
