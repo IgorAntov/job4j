@@ -25,7 +25,7 @@ public class FitTest {
     @Test
     public void womanWeight() {
         Fit fit = new Fit();
-        double weight = fit.manWeight(170);
-        assertThat(weight, closeTo(80.5, 0.1));
+        double weight = fit.womanWeight(170);
+        assertThat(weight, closeTo(69, 0.1));
     }
 }
