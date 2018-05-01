@@ -22,7 +22,10 @@ public class ArrayChar {
         boolean result = true;
         char[] value = prefix.toCharArray();
         for ( int i = 0; i < value.length; i++) {
-            if (value[i] != data[i]) result = false;
+            if (value[i] != data[i]) {
+                result = false;
+                break;
+            }
         }
         return result;
     }
