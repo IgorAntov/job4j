@@ -5,13 +5,7 @@ import java.util.StringJoiner;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
-/**
- * Test.
- *
- * @author Igor Antropov
- * @version $Id$
- * @since 0.1
- */
+
 public class PaintTest {
     @Test
     public void whenPyramid4Right() {
