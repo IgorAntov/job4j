@@ -22,4 +22,14 @@ public class FindLoopTest {
         int expect = 0;
         assertThat(result, is(expect));
     }
+
+    @Test
+    public void whenArrayHasnot8ThenMinusOwn() {
+        FindLoop find = new FindLoop();
+        int[] input = new int[] {5, 10, 3};
+        int value = 8;
+        int result = find.indexOf(input, value);
+        int expect = -1;
+        assertThat(result, is(expect));
+    }
 }
