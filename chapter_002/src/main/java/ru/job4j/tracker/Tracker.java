@@ -1,5 +1,6 @@
 package ru.job4j.tracker;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -47,8 +48,8 @@ public class Tracker {
      * @param id уникальный ключ
      * @param item - класс заявка
      */
-    public void replace(String id, Item item){
-        for (int index = 0; index != position; index++){
+    public void replace(String id, Item item) {
+        for (int index = 0; index != position; index++) {
             if (this.items[index].getId().equals(id)) {
                 item.setId(this.items[index].getId());
                 this.items[index] = item;
@@ -61,11 +62,12 @@ public class Tracker {
      * Метод реализаущий удаление заявки из хранилища
      * @param id уникальный ключ
      */
-    public void delete(String id){
+    public void delete(String id) {
         for (int index = 0; index != position; index++) {
             if (this.items[index].getId().equals(id)) {
-                this.items[index] = this.items[position - 1];
-                this.items[position - 1] = null;
+                for (int j = index; j != position; j++) {
+                    items[j] = items[j + 1];
+                }
                 position--;
                 break;
             }
@@ -78,7 +80,7 @@ public class Tracker {
      */
     public Item[] findAll() {
         Item[] result = new Item[position];
-        for ( int index = 0; index != position; index++){
+        for (int index = 0; index != position; index++) {
             result[index] = this.items[index];
         }
         return result;
@@ -90,23 +92,17 @@ public class Tracker {
      * @return все заявки с одинаковым именем (key)
      */
     public Item[] findByName(String key) {
-        Item[] result = null;
         int count = 0;
-        for (int index = 0; index != position; index++) {
-            if (this.items[index].getName().equals(key)) {
-                count++;
-            }
-        }
-        result = new Item[count];
-        count = 0;
-        for (int index = 0; index != position; index++) {
-            if (this.items[index].getName().equals(key)) {
+        Item[] result = new Item[this.position];
+        for (int index = 0; index != this.position; index++) {
+            if (items[index].getName().equals(key)) {
                 result[count] = this.items[index];
                 count++;
             }
         }
-        return result;
+        return Arrays.copyOf(result, count);
     }
+
 
     /**
      * Метод реализаущий поиск заявки по id
