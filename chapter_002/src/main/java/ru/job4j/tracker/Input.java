@@ -9,5 +9,5 @@ public interface Input {
     /**
      * Метод реализующий зпрос к пользователю.
      */
-    public String ask(String question);
+    String ask(String question);
 }
