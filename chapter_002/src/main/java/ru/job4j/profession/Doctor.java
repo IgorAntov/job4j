@@ -1,6 +1,6 @@
 package ru.job4j.profession;
 
-public class Doctor extends Profession{
+public class Doctor extends Profession {
 
     public boolean heal(Pacient pacient) {
         return false;
