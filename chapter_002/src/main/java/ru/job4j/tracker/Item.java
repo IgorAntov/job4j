@@ -6,29 +6,29 @@ public class Item {
 
 String name;
 String description;
-String Id;
+String id;
 Date createDate;
 
 
-public Item(String name, String description){
+public Item(String name, String description) {
     this.name = name;
     this.description = description;
 }
 
-public String getName(){
+public String getName() {
     return this.name;
 }
 
-public String getDescription(){
+public String getDescription() {
     return this.description;
 }
 
-public String getId(){
-  return this.Id;
+public String getId() {
+  return this.id;
 }
 
-public void setId(String Id) {
-    this.Id = Id;
+public void setId(String id) {
+    this.id = id;
 }
 
 }
