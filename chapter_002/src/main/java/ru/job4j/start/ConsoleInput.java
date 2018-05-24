@@ -1,6 +1,7 @@
 package ru.job4j.start;
 
 import ru.job4j.tracker.Input;
+import ru.job4j.tracker.MenuOutException;
 
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ import java.util.Scanner;
  */
 public class ConsoleInput implements Input {
 
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
     /**
      * Метод реализующий зпрос к пользователю
      * @param question вопрос к пользователю
@@ -20,5 +21,22 @@ public class ConsoleInput implements Input {
     public String ask(String question) {
         System.out.print(question);
         return scanner.next();
+    }
+
+    public int ask(String question, int[] range) {
+
+        int key = Integer.valueOf(this.ask(question));
+        boolean exist = false;
+        for (int value: range) {
+            if (value == key) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            return key;
+        } else {
+            throw new MenuOutException("Выход за пределы диапазона значений");
+        }
     }
 }

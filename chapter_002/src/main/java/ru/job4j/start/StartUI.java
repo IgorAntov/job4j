@@ -1,9 +1,6 @@
 package ru.job4j.start;
 
-import ru.job4j.tracker.Input;
-import ru.job4j.tracker.Item;
-import ru.job4j.tracker.MenuTracker;
-import ru.job4j.tracker.Tracker;
+import ru.job4j.tracker.*;
 
 /**
  * @author Igor Antropov
@@ -11,7 +8,6 @@ import ru.job4j.tracker.Tracker;
  * @since 0.1
  */
 public class StartUI {
-
     private Input input;
     private Tracker tracker;
 
@@ -23,19 +19,15 @@ public class StartUI {
     public void init() {
         MenuTracker menu = new MenuTracker(this.input, tracker);
         menu.fillaction();
-        int key;
         do {
             menu.show();
-            key = Integer.valueOf(input.ask("Введите пункт меню :"));
-            if (key < 6) {
-                menu.select(key);
-            }
-        } while (!"6".equals(String.valueOf(key)));
+                menu.select(input.ask("Введите пункт меню :", menu.getRange()));
+          } while (menu.exit());
     }
 
     public static void main(String[] args) {
         Tracker tracker = new Tracker();
-        Input input = new ConsoleInput();
+        Input input = new ValidateInput();
         new StartUI(input, tracker).init();
     }
 }

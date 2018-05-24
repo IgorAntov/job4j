@@ -10,4 +10,6 @@ public interface Input {
      * Метод реализующий зпрос к пользователю.
      */
     String ask(String question);
+
+    int ask(String question, int[] range);
 }

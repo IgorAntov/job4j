@@ -36,7 +36,7 @@ class FindByName implements UserAction {
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        Item[] result = null;
+        Item[] result;
         System.out.println("------------ Поиск заявки по имени: --------------");
         String id = input.ask("Введите имя заявки:");
         result = tracker.findByName(id);
@@ -61,15 +61,17 @@ class FindByName implements UserAction {
 
 public class MenuTracker {
 
-    Input input;
-    Tracker trecker;
+    private Input input;
+    private Tracker trecker;
 
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
         this.trecker = tracker;
     }
 
-    UserAction[] action = new UserAction[6];
+    private UserAction[] action = new UserAction[7];
+
+    private Exit exit = this.new Exit();
 
     public void fillaction() {
         action[0] = this.new AddItem();
@@ -78,10 +80,23 @@ public class MenuTracker {
         action[3] = this.new DeleteItem();
         action[4] = new MenuTracker.FindById();
         action[5] = new FindByName();
+        action[6] = exit;
+    }
+
+    public int[] getRange() {
+        int[] range = new int[action.length];
+        for (int i = 0; i < range.length; i++) {
+            range[i] = i;
+        }
+        return range;
     }
 
     public void select(int key) {
         this.action[key].execute(this.input, this.trecker);
+    }
+
+    public boolean exit() {
+        return exit.getExit();
     }
 
     public void show() {
@@ -91,7 +106,6 @@ public class MenuTracker {
                 System.out.print(action.info());
             }
         }
-        System.out.println("6. Выйти из программы.");
     }
 
     /**
@@ -106,7 +120,7 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            Item[] result = null;
+            Item[] result;
             System.out.println("------------ Лист заявок: --------------");
             result = tracker.findAll();
             if (result != null) {
@@ -208,4 +222,29 @@ public class MenuTracker {
             return String.format("%s. %s\n", this.key(), "Удалить заявку.");
         }
     }
+
+    public class Exit implements UserAction {
+
+        private boolean exit = true;
+
+        @Override
+        public int key() {
+            return 6;
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            exit = false;
+        }
+
+        boolean getExit() {
+            return this.exit;
+        }
+
+        @Override
+        public String info() {
+            return String.format("%s. %s\n", this.key(), "Выйти из программы.");
+        }
+    }
+
 }
