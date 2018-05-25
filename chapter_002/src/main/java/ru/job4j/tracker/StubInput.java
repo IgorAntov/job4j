@@ -23,11 +23,6 @@ public class StubInput implements Input {
                 break;
             }
         }
-        //      if (exist) {
-        //          return key;
-        //      } else {
-        //          throw new MenuOutException("Выход за пределы диапазона значений.");
-        //      }
         if (!exist) {
             throw new MenuOutException("Выход за пределы диапазона значений.");
         }
