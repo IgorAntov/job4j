@@ -63,13 +63,19 @@ public class MenuTracker {
     private Exit exit = this.new Exit();
 
     public void fillaction() {
-        action[position++] = this.new AddItem(position, "Добавить новую заявку.");
-        action[position++] = new MenuTracker.ShowAll(position, "Показать все заявки.");
-        action[position++] = new EditItem(position, "Редактировать заявку.");
-        action[position++] = this.new DeleteItem(position, "Удалить заявку.");
-        action[position++] = new MenuTracker.FindById(position, "Найти заявку по ключу id.");
-        action[position++] = new FindByName(position, "Найти заявку по имени.");
-        action[position++] = exit;
+        action[position] = this.new AddItem(position, "Добавить новую заявку.");
+        position++;
+        action[position] = new MenuTracker.ShowAll(position, "Показать все заявки.");
+        position++;
+        action[position] = new EditItem(position, "Редактировать заявку.");
+        position++;
+        action[position] = this.new DeleteItem(position, "Удалить заявку.");
+        position++;
+        action[position] = new MenuTracker.FindById(position, "Найти заявку по ключу id.");
+        position++;
+        action[position] = new FindByName(position, "Найти заявку по имени.");
+        position++;
+        action[position] = exit;
     }
 
     public int[] getRange() {
