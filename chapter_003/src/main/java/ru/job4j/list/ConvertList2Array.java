@@ -38,4 +38,19 @@ public class ConvertList2Array {
         }
         return array;
     }
+
+    /**
+     * метод равномерно разбивает лист на количество строк двумерного массива
+     * @param - лист массивов со значениями.
+     * @return - лист значенинй
+     * */
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> result = new ArrayList<>();
+        for (int[] arr : list) {
+            for (int value : arr) {
+                result.add(value);
+            }
+        }
+        return result;
+    }
 }
