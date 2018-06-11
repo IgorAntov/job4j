@@ -21,7 +21,7 @@ public class StartUI {
         menu.fillaction();
         do {
             menu.show();
-                menu.select(input.ask("Введите пункт меню :", menu.getRange()));
+            menu.select(input.ask("Введите пункт меню :", menu.getRange()));
           } while (menu.exit());
     }
 

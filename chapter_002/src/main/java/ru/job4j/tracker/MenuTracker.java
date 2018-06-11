@@ -1,5 +1,9 @@
 package ru.job4j.tracker;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * класс редактирования заявки
  */
@@ -29,7 +33,7 @@ class FindByName extends BaseAction {
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        Item[] result;
+        List<Item> result = new ArrayList<>();
         System.out.println("------------ Поиск заявки по имени: --------------");
         String id = input.ask("Введите имя заявки:");
         result = tracker.findByName(id);
@@ -58,36 +62,31 @@ public class MenuTracker {
         this.trecker = tracker;
     }
 
-    private UserAction[] action = new UserAction[7];
+    private List<UserAction> action = new ArrayList<>();
 
     private Exit exit = this.new Exit();
 
     public void fillaction() {
-        action[position] = this.new AddItem(position, "Добавить новую заявку.");
-        position++;
-        action[position] = new MenuTracker.ShowAll(position, "Показать все заявки.");
-        position++;
-        action[position] = new EditItem(position, "Редактировать заявку.");
-        position++;
-        action[position] = this.new DeleteItem(position, "Удалить заявку.");
-        position++;
-        action[position] = new MenuTracker.FindById(position, "Найти заявку по ключу id.");
-        position++;
-        action[position] = new FindByName(position, "Найти заявку по имени.");
-        position++;
-        action[position] = exit;
+        action.add(this.new AddItem(action.size(), "Добавить новую заявку."));
+        action.add(new MenuTracker.ShowAll(action.size(), "Показать все заявки."));
+        action.add(new EditItem(action.size(), "Редактировать заявку."));
+        action.add(this.new DeleteItem(action.size(), "Удалить заявку."));
+        action.add(new MenuTracker.FindById(action.size(), "Найти заявку по ключу id."));
+        action.add(new FindByName(action.size(), "Найти заявку по имени."));
+        action.add(exit);
     }
 
-    public int[] getRange() {
-        int[] range = new int[action.length];
-        for (int i = 0; i < range.length; i++) {
-            range[i] = i;
+    public ArrayList<Integer> getRange() {
+        ArrayList<Integer> range = new ArrayList<>();
+        for (int i = 0; i < action.size(); i++) {
+            range.add(i);
         }
         return range;
     }
 
+
     public void select(int key) {
-        this.action[key].execute(this.input, this.trecker);
+        action.get(key).execute(this.input, this.trecker);
     }
 
     public boolean exit() {
@@ -114,7 +113,7 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            Item[] result;
+            List<Item> result = new ArrayList<>();
             System.out.println("------------ Лист заявок: --------------");
             result = tracker.findAll();
             if (result != null) {

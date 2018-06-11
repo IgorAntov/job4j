@@ -2,6 +2,8 @@ package ru.job4j.tracker;
 
 import ru.job4j.start.ConsoleInput;
 
+import java.util.List;
+
 /**
  * @author Igor Antropov
  * @version $Id$
@@ -21,7 +23,7 @@ public class ValidateInput implements Input  {
         return this.input.ask(question);
     }
 
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         boolean invalid = true;
         int value = -1;
         do {

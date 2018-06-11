@@ -7,6 +7,9 @@ import ru.job4j.start.StartUI;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -31,7 +34,8 @@ public class ValidateInputTest {
         ValidateInput input = new ValidateInput(
                 new StubInput(new String[] {"x", "1"})
         );
-        input.ask("Enter", new int[] {1});
+        input.ask("Enter", Arrays.asList(new Integer[] {1}));
+
         assertThat(
                 this.mem.toString(),
                 is(
@@ -45,7 +49,7 @@ public class ValidateInputTest {
         ValidateInput input = new ValidateInput(
                 new StubInput(new String[] {"5", "1"})
         );
-        input.ask("Enter", new int[] {1});
+        input.ask("Enter", Arrays.asList(new Integer[] {1}));
         assertThat(
                 this.mem.toString(),
                 is(
