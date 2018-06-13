@@ -2,11 +2,11 @@ package ru.job4j;
 
 public class ParseString {
 
-    class ValidStrException extends Exception{
+    class ValidStrException extends Exception {
     }
 
     String result = "";
-    String result2 ="";
+    String result2 = "";
     String position = "";
     String tempstr = "";
     int pointer = 0;
@@ -18,7 +18,7 @@ public class ParseString {
      */
     public String validStr(String str) {
         char tempCh;
-        String inputStr ="";
+        String inputStr = "";
         inputStr = str;
         try {
             if (pointer != str.length()) {
@@ -82,8 +82,7 @@ public class ParseString {
             }
         } catch (ParseString.ValidStrException vse) {
             result = "No Valid";
-        }
-        finally {
+        } finally {
             return result;
         }
 

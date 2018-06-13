@@ -39,18 +39,18 @@ public class GetChange {
 
             result = new int[coins];
 
-            for (int i = 0; i < coins;i++) {
+            for (int i = 0; i < coins; i++) {
                 if (i < coin10) {
                     result[i] = 10;
                 }
-                if (i >= coin10 && i< (coin10+coin5)) {
+                if (i >= coin10 && i < (coin10 + coin5)) {
                     result[i] = 5;
                 }
                 if (i >= (coin10 + coin5) && i < (coin10 + coin5 + coin2)) {
                     result[i] = 2;
                 }
                 if (i >= (coin10 + coin5 + coin2)) {
-                    result[i] =1;
+                    result[i] = 1;
                 }
             }
 
@@ -63,8 +63,8 @@ public class GetChange {
         GetChange getChange = new GetChange();
 
         System.out.println("Changed task.");
-        for (int value: getChange.changes(50,35)) {
-            System.out.println(String.format("Change: %s",value));
+        for (int value: getChange.changes(50, 35)) {
+            System.out.println(String.format("Change: %s", value));
         }
     }
 

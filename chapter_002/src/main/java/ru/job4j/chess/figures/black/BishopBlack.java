@@ -37,11 +37,10 @@ public class BishopBlack implements Figure {
 
         steps = new Cell[abs(dest.x - source.x)];
         for (Cell cell : Cell.values()) {
-            if ((dest.x < cell.x && cell.x < source.x && dest.y < cell.y && cell.y < source.y) ||
-                    (dest.x > cell.x && cell.x > source.x && dest.y < cell.y && cell.y < source.y) ||
-                    (dest.x < cell.x && cell.x < source.x && dest.y > cell.y && cell.y > source.y) ||
-                    (dest.x > cell.x && cell.x > source.x && dest.y > cell.y && cell.y > source.y))
-            {
+            if ((dest.x < cell.x && cell.x < source.x && dest.y < cell.y && cell.y < source.y)
+                    || (dest.x > cell.x && cell.x > source.x && dest.y < cell.y && cell.y < source.y)
+                    || (dest.x < cell.x && cell.x < source.x && dest.y > cell.y && cell.y > source.y)
+                    || (dest.x > cell.x && cell.x > source.x && dest.y > cell.y && cell.y > source.y)) {
                 steps[step] = cell;
                 step++;
             }
