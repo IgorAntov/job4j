@@ -1,6 +1,6 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.input;
 
-import ru.job4j.start.ConsoleInput;
+import ru.job4j.tracker.exception.MenuOutException;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @version $Id$
  * @since 0.1
  */
-public class ValidateInput implements Input  {
+public class ValidateInput implements Input {
 
 
     private final Input input;

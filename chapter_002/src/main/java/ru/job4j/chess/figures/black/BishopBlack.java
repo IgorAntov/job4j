@@ -36,7 +36,12 @@ public class BishopBlack implements Figure {
         }
 
         steps = new Cell[abs(dest.x - source.x)];
+
+        int deltaX = (dest.x - source.x) > 0 ? 1 : -1;
+        int deltaY = (dest.y - source.y) > 0 ? 1 : -1;
+
         for (Cell cell : Cell.values()) {
+
             if ((dest.x < cell.x && cell.x < source.x && dest.y < cell.y && cell.y < source.y)
                     || (dest.x > cell.x && cell.x > source.x && dest.y < cell.y && cell.y < source.y)
                     || (dest.x < cell.x && cell.x < source.x && dest.y > cell.y && cell.y > source.y)
@@ -48,7 +53,6 @@ public class BishopBlack implements Figure {
         steps[step] = dest;
         return steps;
     }
-
 
     @Override
     public Figure copy(Cell dest) {

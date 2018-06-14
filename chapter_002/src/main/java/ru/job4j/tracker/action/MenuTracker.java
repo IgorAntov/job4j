@@ -1,6 +1,9 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.action;
 
-import java.lang.reflect.Array;
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.model.Item;
+import ru.job4j.tracker.storage.Tracker;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +18,14 @@ class EditItem extends BaseAction {
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        String id = input.ask("Введите id заявки");
-        String name = input.ask("Введите имя заявки :");
-        String desc = input.ask("Введите описание заявки :");
-        tracker.replace(id, new Item(name, desc));
+        if (tracker.findAll().size() > 0) {
+            String id = input.ask("Введите id заявки");
+            String name = input.ask("Введите имя заявки :");
+            String desc = input.ask("Введите описание заявки :");
+            tracker.replace(id, new Item(name, desc));
+        } else {
+            System.out.println("------------ Лист заявок пуст. ----------- ");
+        }
     }
 }
 
@@ -187,10 +194,14 @@ public class MenuTracker {
         }
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("------------ Удаление заявки --------------");
-            String id = input.ask("Введите id заявки которую требуется удалить:");
-            tracker.delete(id);
-            System.out.println("------------ Заявка с getId удалена: " + id);
+            if (tracker.findAll().size() > 0) {
+                System.out.println("------------ Удаление заявки --------------");
+                String id = input.ask("Введите id заявки которую требуется удалить:");
+                tracker.delete(id);
+                System.out.println("------------ Заявка с getId удалена: " + id);
+            } else {
+                System.out.println("------------ Лист заявок пуст. ----------- ");
+            }
         }
     }
 

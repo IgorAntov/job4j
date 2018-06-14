@@ -3,7 +3,12 @@ package ru.job4j.tracker;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.job4j.start.StartUI;
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.input.StubInput;
+import ru.job4j.tracker.model.Item;
+import ru.job4j.tracker.start.StartUI;
+import ru.job4j.tracker.storage.Tracker;
+
 import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
 import static org.hamcrest.core.Is.is;

@@ -1,6 +1,10 @@
-package ru.job4j.start;
+package ru.job4j.tracker.start;
 
-import ru.job4j.tracker.*;
+import ru.job4j.tracker.action.MenuTracker;
+import ru.job4j.tracker.input.ConsoleInput;
+import ru.job4j.tracker.input.Input;
+import ru.job4j.tracker.input.ValidateInput;
+import ru.job4j.tracker.storage.Tracker;
 
 /**
  * @author Igor Antropov

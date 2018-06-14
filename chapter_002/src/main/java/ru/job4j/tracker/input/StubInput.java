@@ -1,4 +1,6 @@
-package ru.job4j.tracker;
+package ru.job4j.tracker.input;
+
+import ru.job4j.tracker.exception.MenuOutException;
 
 import java.util.List;
 
@@ -7,7 +9,7 @@ public class StubInput implements Input {
     private final String[] value;
     private int position;
 
-    StubInput(final String[] value) {
+    public StubInput(final String[] value) {
         this.value = value;
     }
 
