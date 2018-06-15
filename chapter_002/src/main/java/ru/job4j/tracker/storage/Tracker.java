@@ -51,27 +51,33 @@ public class Tracker {
      * @param id уникальный ключ
      * @param item - класс заявка
      */
-    public void replace(String id, Item item) {
+    public boolean replace(String id, Item item) {
+        boolean result = false;
         for (int index = 0; index < items.size(); index++) {
             if (items.get(index).getId().equals(id)) {
                 item.setId(this.items.get(index).getId());
                 items.set(index, item);
+                result = true;
                 break;
             }
         }
+        return result;
     }
 
     /**
      * Метод реализаущий удаление заявки из хранилища
      * @param id уникальный ключ
      */
-    public void delete(String id) {
+    public boolean delete(String id) {
+        boolean result = false;
         for (Item value : items) {
             if (value.getId().equals(id)) {
                 items.remove(value);
+                result = true;
                 break;
             }
         }
+        return result;
     }
 
     /**
@@ -113,5 +119,13 @@ public class Tracker {
             }
         }
         return result;
+    }
+
+    /**
+     * Проверка, что список не пустой
+     */
+    public boolean listNotEmpty() {
+
+        return items.size() > 0 ? true : false;
     }
 }

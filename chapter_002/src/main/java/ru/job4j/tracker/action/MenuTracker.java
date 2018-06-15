@@ -18,11 +18,16 @@ class EditItem extends BaseAction {
 
     @Override
     public void execute(Input input, Tracker tracker) {
-        if (tracker.findAll().size() > 0) {
+        if (tracker.listNotEmpty()) {
             String id = input.ask("Введите id заявки");
             String name = input.ask("Введите имя заявки :");
             String desc = input.ask("Введите описание заявки :");
-            tracker.replace(id, new Item(name, desc));
+            if (tracker.replace(id, new Item(name, desc))) {
+                System.out.println("------------ Заявка успешно отредактирована. ----------- ");
+            } else {
+                System.out.println("------------ Заявка с таким Id не найдена. -----");
+            }
+
         } else {
             System.out.println("------------ Лист заявок пуст. ----------- ");
         }
@@ -194,11 +199,14 @@ public class MenuTracker {
         }
         @Override
         public void execute(Input input, Tracker tracker) {
-            if (tracker.findAll().size() > 0) {
+            if (tracker.listNotEmpty()) {
                 System.out.println("------------ Удаление заявки --------------");
                 String id = input.ask("Введите id заявки которую требуется удалить:");
-                tracker.delete(id);
-                System.out.println("------------ Заявка с getId удалена: " + id);
+                if (tracker.delete(id)) {
+                    System.out.println("------------ Заявка с getId удалена: " + id);
+                } else {
+                    System.out.println("------------ Заявка с таким Id не найдена. ---- " + id);
+                }
             } else {
                 System.out.println("------------ Лист заявок пуст. ----------- ");
             }
