@@ -20,23 +20,17 @@ public class GetChange {
 
             if (delta / 10 > 0) {
                 coin10 = delta / 10;
-                delta = delta - coin10 * 10;
-                coins = coin10;
-            }
-            if (delta / 5 > 0) {
-                coin5 = delta / 5;
-                delta = delta - coin5 * 5;
-                coins = coins + coin5;
-            }
-            if (delta / 2 > 0) {
-                coin2 = delta / 2;
-                delta = delta - coin2 * 5;
-                coins = coins + coin2;
-            }
-            if (delta > 0) {
+                }
+            if ((delta - coin10 * 10) / 5 > 0) {
+                coin5 = (delta - coin10 * 10) / 5;
+                }
+            if ((delta - coin10 * 10 - coin5 * 5) / 2 > 0) {
+                coin2 = (delta - coin10 * 10 - coin5 * 5) / 2;
+               }
+            if ((delta - coin10 * 10 - coin5 * 5 - coin2 * 2) > 0) {
                 coins++;
             }
-
+            coins += coin10 + coin5 + coin2;
             result = new int[coins];
 
             for (int i = 0; i < coins; i++) {
