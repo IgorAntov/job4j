@@ -25,15 +25,17 @@ public class MatrixIterator implements Iterator {
 
     @Override
     public Object next() {
+        int value;
         if (!this.hasNext()) {
             throw new NoSuchElementException();
         }
         if (values[indexRow].length - 1 == indexCol) {
             int i = indexCol;
             indexCol = 0;
-            return values[indexRow++][i];
+            value = values[indexRow++][i];
         } else {
-            return values[indexRow][indexCol++];
+            value = values[indexRow][indexCol++];
         }
+        return value;
     }
 }
