@@ -18,7 +18,7 @@ public class SimpleArrayTest {
 
     private Iterator<String> it;
 
-    public  SimpleArray<String> testStringArray = new SimpleArray(3);
+    public SimpleArray<String> testStringArray = new SimpleArray(3);
     public SimpleArray<Integer> testIntegerArray = new SimpleArray(3);
 
     @Before

@@ -1,4 +1,4 @@
-package ru.jod4j.services;
+package ru.job4j.service;
 
 import org.junit.Before;
 import org.junit.Test;

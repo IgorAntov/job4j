@@ -1,4 +1,4 @@
-package ru.jod4j.services;
+package ru.job4j.service;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

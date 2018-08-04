@@ -8,7 +8,7 @@ package ru.job4j.generic;
 public class UserStor extends AbstractStore<User> {
 
        public UserStor(int size) {
-       super(new SimpleArray<>(size));
+       super( new SimpleArray<>(size));
           }
 
 }
