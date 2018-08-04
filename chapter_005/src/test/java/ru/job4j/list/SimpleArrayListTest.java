@@ -39,4 +39,10 @@ public class SimpleArrayListTest {
         list.add(4);
         assertThat(list.get(0), is(4));
     }
+
+    @Test
+    public void name() throws Exception {
+        int i = list.delete();
+        System.out.println(i);
+    }
 }

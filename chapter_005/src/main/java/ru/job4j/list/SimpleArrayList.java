@@ -28,11 +28,8 @@ public class SimpleArrayList<E> {
         Node<E> returnNode = null;
         Node<E> result = this.first;
         if (first != null) {
-            for (int i = 0; i < size - 2; i++) {
-                result = result.next;
-            }
             returnNode = first;
-            this.first = result.next.next;
+            this.first = result.next;
             size--;
         }
         return returnNode.date;
