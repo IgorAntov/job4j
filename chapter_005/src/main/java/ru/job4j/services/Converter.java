@@ -19,18 +19,19 @@ public class Converter {
 
         return new Iterator<Integer>() {
             @Override
+
             public boolean hasNext() {
                 isNext = false;
-                if (tempIterator.hasNext()) {
-                    isNext = true;
-                } else {
-                    if (it.hasNext()) {
+                do {
+                    if (!tempIterator.hasNext() && it.hasNext()) {
                         tempIterator = it.next();
-                        if (tempIterator.hasNext()) {
-                            isNext = true;
-                        }
                     }
-                }
+                    if (tempIterator.hasNext()) {
+                        isNext = true;
+                    } else {
+                        isNext = false;
+                    }
+                } while (!isNext && it.hasNext());
                 return isNext;
             }
 
