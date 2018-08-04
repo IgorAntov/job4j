@@ -40,9 +40,7 @@ public class EvenNumbersIterator implements Iterator {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        if (isNext()) {
             indexHasNext = index + 1;
-        }
         return values[index];
     }
 }
