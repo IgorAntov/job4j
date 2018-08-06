@@ -10,9 +10,9 @@ import java.util.NoSuchElementException;
  */
 public class SimpleArray<T> implements Iterable {
 
-    public int arraySize = 0;
-    public T[] arraySimple;
-    int index = 0;
+    protected int arraySize = 0;
+    private T[] arraySimple;
+    private int position = 0;
 
     public SimpleArray(int arraySize) {
         this.arraySize = arraySize;
@@ -25,7 +25,7 @@ public class SimpleArray<T> implements Iterable {
      * @return
      */
     public boolean add(T model) {
-        arraySimple[index++] = model;
+        arraySimple[position++] = model;
         return true;
     }
 
@@ -53,13 +53,15 @@ public class SimpleArray<T> implements Iterable {
         }
         for (int i = 0; i < arraySize; i++) {
             if (i == index) {
-                for (int j = i + 1; j < arraySize; j++) {
-                    arraySimple[j - 1] = arraySimple[j];
+                if (i != position - 1) {
+                    arraySimple[i] = arraySimple[i + 1];
+                    index++;
+                } else {
+                    arraySimple[i] = null;
+                    position--;
                 }
-                arraySimple[arraySize - 1] = null;
-                result = true;
-                break;
             }
+            result = true;
         }
         return result;
     }
