@@ -8,14 +8,12 @@ import java.util.NoSuchElementException;
  * @version $Id$
  * @since 0.1
  */
-public class SimpleArray<T> implements Iterable {
+public class SimpleArray<T> implements Iterable<T> {
 
-    protected int arraySize = 0;
     private T[] arraySimple;
     private int position = 0;
 
     public SimpleArray(int arraySize) {
-        this.arraySize = arraySize;
         this.arraySimple = (T[]) new Object[arraySize];
     }
 
@@ -35,7 +33,7 @@ public class SimpleArray<T> implements Iterable {
      * @return
      */
     public T get(int index) {
-        if (index >= arraySize) {
+        if (index >= getSize()) {
             throw new NoSuchElementException();
         }
         return arraySimple[index];
@@ -48,23 +46,23 @@ public class SimpleArray<T> implements Iterable {
      */
     public boolean delete(int index) {
         boolean result = false;
-        if (index >= arraySize) {
+        if (index >= position) {
             throw new NoSuchElementException();
         }
-        for (int i = 0; i < arraySize; i++) {
-            if (i == index) {
-                if (i != position - 1) {
-                    arraySimple[i] = arraySimple[i + 1];
-                    index++;
-                } else {
-                    arraySimple[i] = null;
-                    position--;
-                }
-            }
-            result = true;
-        }
-        return result;
+        System.arraycopy(this.arraySimple, index + 1, this.arraySimple, index, arraySimple.length - index - 1);
+        arraySimple[arraySimple.length - 1] = null;
+        position--;
+        return true;
     }
+
+    /**
+     * Method return array size
+     * @return
+     */
+    public int getSize() {
+        return position;
+    }
+
 
     /**
      * Replace existing Object in Array
@@ -73,7 +71,7 @@ public class SimpleArray<T> implements Iterable {
      * @return
      */
     public boolean set(int index, T model) {
-        if (index >= arraySize) {
+        if (index >= position) {
             throw new NoSuchElementException();
         }
         arraySimple[index] = model;
@@ -81,7 +79,7 @@ public class SimpleArray<T> implements Iterable {
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         return new Iterator<T>() {
 
             int indexIterator = 0;
@@ -89,7 +87,7 @@ public class SimpleArray<T> implements Iterable {
             @Override
             public boolean hasNext() {
                 boolean result = false;
-                if (indexIterator < arraySize) {
+                if (indexIterator < getSize()) {
                     result = true;
                 }
                 return result;
