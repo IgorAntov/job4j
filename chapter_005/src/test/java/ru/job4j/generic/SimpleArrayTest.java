@@ -55,7 +55,7 @@ public class SimpleArrayTest {
         testStringArray.delete(0);
         assertThat(testStringArray.get(0), is("test2"));
         assertThat(testStringArray.get(1), is("test3"));
-   //     assertThat(testStringArray.get(2), is((String) null));
+        assertThat(testStringArray.get(2), is((String) null));
     }
 
      @Test
