@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  * @version $Id$
  * @since 0.1
  */
-public class SimpleDynamicArray<E> implements Iterable   {
+public class SimpleDynamicArray<E> implements Iterable<E>   {
 
 
     private int capacity = 5;
@@ -23,7 +23,7 @@ public class SimpleDynamicArray<E> implements Iterable   {
      * @param value
      * @return
      */
-    public boolean add(E value){
+    public boolean add(E value) {
         E[] tempArray;
         boolean result;
         if (this.index < capacity) {
@@ -39,7 +39,7 @@ public class SimpleDynamicArray<E> implements Iterable   {
             arraySimple[this.index++] = value;
             result = true;
         }
-        if (result == true) {
+        if (result) {
             modCount++;
         }
         return result;
@@ -56,7 +56,7 @@ public class SimpleDynamicArray<E> implements Iterable   {
      * Iterator tracks simpleArray modification and throw exception if array is changed
      * @return
      */
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return new Iterator<E>() {
             int expectedModCount = modCount;
             int indexIterator = 0;

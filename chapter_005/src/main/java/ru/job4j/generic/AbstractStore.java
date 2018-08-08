@@ -80,7 +80,7 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
      */
     private int getIndex(String id) {
         int result = -1;
-        for (int i = 0; i < list.arraySize; i++) {
+        for (int i = 0; i < list.getSize(); i++) {
             if ((list.get(i) != null) && (list.get(i).getId() == id)) {
                 result = i;
                 break;
