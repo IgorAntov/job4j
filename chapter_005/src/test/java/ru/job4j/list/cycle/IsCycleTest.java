@@ -32,6 +32,12 @@ public class IsCycleTest {
        four.next = null;
 
        assertThat(iscycle.hasCycle(first), is(false));
-       }
 
+       two.next = third;
+       third.next = two;
+       four.next = first;
+
+       assertThat(iscycle.hasCycle(first), is(true));
+
+       }
 }
