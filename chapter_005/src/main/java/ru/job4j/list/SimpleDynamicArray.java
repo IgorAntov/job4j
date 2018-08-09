@@ -24,26 +24,22 @@ public class SimpleDynamicArray<E> implements Iterable<E>   {
      * @return
      */
     public boolean add(E value) {
-        E[] tempArray;
-        boolean result;
-        if (this.index < capacity) {
-            arraySimple[this.index++] = value;
-            result = true;
-        } else {
-            tempArray = arraySimple;
-            capacity += 5;
-            arraySimple =  (E[]) new Object[capacity];
-            for (int i = 0; i < tempArray.length; i++) {
-                arraySimple[i] = tempArray[i];
-            }
-            arraySimple[this.index++] = value;
-            result = true;
+        if (this.index >= capacity) {
+            resize();
         }
-        if (result) {
-            modCount++;
-        }
-        return result;
+        arraySimple[this.index++] = value;
+        modCount++;
+        return true;
     }
+
+    public void resize() {
+        E[] tempArray;
+        tempArray = arraySimple;
+        capacity += 5;
+        arraySimple =  (E[]) new Object[capacity];
+        System.arraycopy(tempArray, 0, this.arraySimple, 0, index);
+    }
+
 /**
  * Method gets Object from SimpleArray
  */
