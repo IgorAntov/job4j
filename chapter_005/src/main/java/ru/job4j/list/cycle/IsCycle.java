@@ -1,7 +1,5 @@
 package ru.job4j.list.cycle;
 
-import ru.job4j.list.SimpleDynamicArray;
-
 /**
  * @author Igor Antropov
  * @version $Id$
@@ -16,30 +14,33 @@ public class IsCycle {
      */
     boolean hasCycle(Node first) {
 
-        SimpleDynamicArray<Node> nodeArray = new SimpleDynamicArray<>();
-
         boolean result = false;
-        Node current = first;
+        Node pointerOwn, pointerTwo;
+        pointerOwn = first;
+        pointerTwo = first;
 
-        while (current.next != null && !result) {
-            if (isNode(current.next, nodeArray)) {
+        while(true) {
+            if(first == null) {
+                break;
+            }
+            pointerOwn = pointerOwn.next;
+            if(pointerTwo.next != null) {
+            pointerTwo = pointerTwo.next.next;
+            }
+            else {
+                result = false;
+                break;
+            }
+            if(pointerOwn == null || pointerTwo == null) {
+                result = false;
+                break;
+            }
+            if(pointerOwn == pointerTwo) {
                 result = true;
                 break;
-            } else {
-                nodeArray.add(current);
-                current = current.next;
             }
         }
         return result;
     }
 
-    public boolean isNode(Node node, SimpleDynamicArray<Node> nodeArray) {
-        boolean result = false;
-        for (Node value: nodeArray) {
-            if (value != null && value.equals(node)) {
-                result = true;
-            }
-        }
-        return result;
-    }
 }
