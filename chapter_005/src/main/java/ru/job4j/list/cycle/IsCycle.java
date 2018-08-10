@@ -19,23 +19,23 @@ public class IsCycle {
         pointerOwn = first;
         pointerTwo = first;
 
-        while(true) {
-            if(first == null) {
+        while (true) {
+            if (first == null) {
                 break;
             }
             pointerOwn = pointerOwn.next;
-            if(pointerTwo.next != null) {
+            if (pointerTwo.next != null) {
             pointerTwo = pointerTwo.next.next;
             }
             else {
                 result = false;
                 break;
             }
-            if(pointerOwn == null || pointerTwo == null) {
+            if (pointerOwn == null || pointerTwo == null) {
                 result = false;
                 break;
             }
-            if(pointerOwn == pointerTwo) {
+            if (pointerOwn == pointerTwo) {
                 result = true;
                 break;
             }
