@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public class SimpleSet<T> implements Iterable<T> {
 
-    private SimpleArray<T> set;
+    private final SimpleArray<T> set;
 
     public SimpleSet(int size) {
         set = new SimpleArray<>(size);

@@ -14,11 +14,11 @@ import static org.hamcrest.Matchers.is;
  */
 public class SimpleSetTest {
 
-    public SimpleSet<String> simpleSet = new SimpleSet<>(5);
-    public Iterator it;
-
     @Test
     public void addObjectsStringInSet() {
+        SimpleSet<String> simpleSet = new SimpleSet<>(5);
+        Iterator it;
+
         simpleSet.add("test1");
         simpleSet.add("test2");
         simpleSet.add("test3");
