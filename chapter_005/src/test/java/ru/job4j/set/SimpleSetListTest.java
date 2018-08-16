@@ -12,11 +12,11 @@ import static org.hamcrest.Matchers.is;
  */
 public class SimpleSetListTest {
 
-    public SimpleSetList<String> simpleSetList = new SimpleSetList<>();
-    public Iterator it;
-
     @Test
     public void addObjectsStringInSetLink() {
+        SimpleSetList<String> simpleSetList = new SimpleSetList<>();
+        Iterator it;
+
         simpleSetList.add("test1");
         simpleSetList.add("test2");
         simpleSetList.add("test3");

@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public class SimpleSetList<E> implements Iterable<E> {
 
-    private SimpleLinkedList<E> set = new SimpleLinkedList<>();
+    private final SimpleLinkedList<E> set = new SimpleLinkedList<>();
 
     /**
      * Method adds new Object to List
