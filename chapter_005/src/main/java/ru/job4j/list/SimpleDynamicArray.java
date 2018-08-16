@@ -12,19 +12,18 @@ import java.util.NoSuchElementException;
 public class SimpleDynamicArray<E> implements Iterable<E>   {
 
 
-    private int capacity = 5;
     private int index;
     private int modCount;
-    private E[] arraySimple = (E[]) new Object[capacity];
+    private E[] arraySimple = (E[]) new Object[5];
 
     /**
      * Method adds new Object to SimpleArray.
-     * When SimpleArray is filled then SimpleArray capacity increases by five.
+     * When SimpleArray is filled then SimpleArray arraySimple.length increases by five.
      * @param value
      * @return
      */
     public boolean add(E value) {
-        if (this.index >= capacity) {
+        if (this.index >= arraySimple.length) {
             resize();
         }
         arraySimple[this.index++] = value;
@@ -35,8 +34,7 @@ public class SimpleDynamicArray<E> implements Iterable<E>   {
     public void resize() {
         E[] tempArray;
         tempArray = arraySimple;
-        capacity += 5;
-        arraySimple =  (E[]) new Object[capacity];
+        arraySimple =  (E[]) new Object[arraySimple.length + 5];
         System.arraycopy(tempArray, 0, this.arraySimple, 0, index);
     }
 
@@ -64,7 +62,7 @@ public class SimpleDynamicArray<E> implements Iterable<E>   {
                     throw new ConcurrentModificationException();
                 }
                 boolean result = false;
-                if (indexIterator < capacity) {
+                if (indexIterator < index) {
                     result = true;
                 }
                 return result;
@@ -72,9 +70,6 @@ public class SimpleDynamicArray<E> implements Iterable<E>   {
 
             @Override
             public E next() {
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
                 if (!this.hasNext()) {
                     throw new NoSuchElementException();
                 }
