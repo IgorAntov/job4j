@@ -10,12 +10,12 @@ import java.util.NoSuchElementException;
  * @version $Id$
  * @since 0.1
  */
-public class SimpleHashMap<K,V> implements Iterable<K> {
+public class SimpleHashMap<K, V> implements Iterable<K> {
 
     private int count;
     private int modCount;
-    private int capacity_increment = 3;
-    private Node<K, V>[] table = new Node[capacity_increment];
+    private int capacityIncrement = 3;
+    private Node<K, V>[] table = new Node[capacityIncrement];
 
     /**Entry to Array
      * @param <K> - key
@@ -46,7 +46,8 @@ public class SimpleHashMap<K,V> implements Iterable<K> {
      */
     static final int hash(Object key) {
         int h;
-        return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+        h = key.hashCode();
+        return (key == null) ? 0 : h ^ (h >>> 16);
     }
 
     /**
@@ -112,7 +113,7 @@ public class SimpleHashMap<K,V> implements Iterable<K> {
      * @return
      */
     private Node<K, V>[] resize(int length) {
-        Node<K, V>[] newTab = (Node<K, V>[]) new Node[length + capacity_increment];
+        Node<K, V>[] newTab = (Node<K, V>[]) new Node[length + capacityIncrement];
         Node<K, V> e;
         for (int j = 0; j < table.length; j++) {
             e = table[j];

@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThat;
 public class SimpleHashMapTest {
 
     @Test
-    public void SimpleHashMapTest() {
+    public void simpleHashMapTest() {
 
         class Key {
             private int i;
