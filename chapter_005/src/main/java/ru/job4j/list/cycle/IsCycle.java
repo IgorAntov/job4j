@@ -25,9 +25,8 @@ public class IsCycle {
             }
             pointerOwn = pointerOwn.next;
             if (pointerTwo.next != null) {
-            pointerTwo = pointerTwo.next.next;
-            }
-            else {
+                pointerTwo = pointerTwo.next.next;
+            } else {
                 result = false;
                 break;
             }
