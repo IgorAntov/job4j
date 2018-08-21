@@ -7,7 +7,7 @@ import java.util.Optional;
  * @version $Id$
  * @since 0.1
  */
-public interface SimpleTree<E extends Comparable<E>> extends Iterable<E> {
+public interface SimpleTree<E extends Comparable<E>> extends Iterable<Node<E>> {
 
     boolean add(E parent, E child);
 
