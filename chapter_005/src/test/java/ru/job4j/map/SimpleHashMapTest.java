@@ -42,7 +42,6 @@ public class SimpleHashMapTest {
         assertThat(simpleHashMap.delete(first), is(true));
         assertThat(simpleHashMap.size(), is(8));
         assertThat(simpleHashMap.get(second), is(2));
-
         Iterator<Key> it = simpleHashMap.iterator();
         assertThat(it.next().i, is(2));
         assertThat(it.next().i, is(3));

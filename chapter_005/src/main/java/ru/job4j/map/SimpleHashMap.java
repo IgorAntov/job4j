@@ -1,6 +1,5 @@
 package ru.job4j.map;
 
-
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -13,9 +12,8 @@ import java.util.NoSuchElementException;
 public class SimpleHashMap<K, V> implements Iterable<K> {
 
     private int count;
-    private int modCount;
-    private int capacityIncrement = 3;
-    private Node<K, V>[] table = new Node[capacityIncrement];
+    private static final int CAPACITY = 3;
+    private Node<K, V>[] table = new Node[CAPACITY];
 
     /**Entry to Array
      * @param <K> - key
@@ -64,7 +62,6 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
         if (p == null) {
             table[index] = new Node(key, value);
             this.count++;
-            this.modCount++;
             if (count == table.length - 1) {
                 table = resize(table.length);
             }
@@ -99,7 +96,6 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
         if (key != null) {
             if (table[hash(key)] != null) {
                 table[hash(key)] = null;
-                this.modCount++;
                 this.count--;
                 result = true;
             }
@@ -113,13 +109,11 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
      * @return
      */
     private Node<K, V>[] resize(int length) {
-        Node<K, V>[] newTab = (Node<K, V>[]) new Node[length + capacityIncrement];
+        Node<K, V>[] newTab = (Node<K, V>[]) new Node[length + CAPACITY];
         Node<K, V> e;
         for (int j = 0; j < table.length; j++) {
             e = table[j];
             if (e != null) {
-//              if ((newTab[hash(e.key) & (newTab.length - 1)]) == null)  {
-//                  newTab[hash(e.key) & (newTab.length - 1)] = e;
                 if (newTab[hash(e.key)] == null) {
                     newTab[hash(e.key)] = e;
 
@@ -146,15 +140,13 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     @Override
     public Iterator<K> iterator() {
         return new Iterator<K>() {
-
-            int expectedModCount = modCount;
+            int expectedModCount = count;
             int indexIterator = 0;
             int pointer = 0;
 
-
             @Override
             public boolean hasNext() {
-                if (expectedModCount != modCount) {
+                if (expectedModCount != count) {
                     throw new ConcurrentModificationException();
                 }
                 boolean result = false;
