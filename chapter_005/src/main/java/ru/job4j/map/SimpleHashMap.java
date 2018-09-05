@@ -1,8 +1,6 @@
 package ru.job4j.map;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * @author Igor Antropov
@@ -12,7 +10,8 @@ import java.util.NoSuchElementException;
 public class SimpleHashMap<K, V> implements Iterable<K> {
 
     private int count;
-    private static final int CAPACITY = 3;
+    private static final int CAPACITY = 16;
+    private static final float LOAD_FACTOR = 0.75f;
     private Node<K, V>[] table = new Node[CAPACITY];
 
     /**Entry to Array
@@ -56,13 +55,13 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
      */
     boolean insert(K key, V value) {
         boolean result;
-        // int index = (table.length - 1) & hash(key);
-        int index = hash(key);
+        int index = (table.length - 1) & hash(key);
+       // int index = hash(key);
         Node<K, V> p = table[index];
         if (p == null) {
             table[index] = new Node(key, value);
             this.count++;
-            if (count == table.length - 1) {
+            if (count > (table.length - 1) * LOAD_FACTOR) {
                 table = resize(table.length);
             }
             result = true;
@@ -104,12 +103,12 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     }
 
     /**
-     * Method resize capacity of table array
+     * Method resize capacity (double capacity) of array
      * @param - old array length
      * @return
      */
     private Node<K, V>[] resize(int length) {
-        Node<K, V>[] newTab = (Node<K, V>[]) new Node[length + CAPACITY];
+        Node<K, V>[] newTab = (Node<K, V>[]) new Node[length * 2];
         Node<K, V> e;
         for (int j = 0; j < table.length; j++) {
             e = table[j];

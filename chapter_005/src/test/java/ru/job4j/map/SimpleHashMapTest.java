@@ -1,5 +1,6 @@
 package ru.job4j.map;
 
+import jdk.nashorn.internal.ir.WhileNode;
 import org.junit.Test;
 import java.util.Iterator;
 
@@ -25,33 +26,28 @@ public class SimpleHashMapTest {
             public int hashCode() {
                 return i;
             }
+
+            public int getI() {
+                return i;
+            }
         }
 
         SimpleHashMap<Key, Integer> simpleHashMap = new SimpleHashMap<>();
         Key first = new Key(1);
         assertThat(simpleHashMap.insert(first, 1), is(true));
-        Key second = new Key(2);
-        assertThat(simpleHashMap.insert(second, 2), is(true));
-        simpleHashMap.insert(new Key(3), 3);
-        simpleHashMap.insert(new Key(4), 4);
-        simpleHashMap.insert(new Key(5), 5);
-        simpleHashMap.insert(new Key(6), 6);
-        simpleHashMap.insert(new Key(7), 7);
-        simpleHashMap.insert(new Key(8), 8);
-        simpleHashMap.insert(new Key(9), 9);
+        for (int i = 2; i <= 20; i++ ) {
+            simpleHashMap.insert(new Key(i), i);
+        }
         assertThat(simpleHashMap.delete(first), is(true));
-        assertThat(simpleHashMap.size(), is(8));
-        assertThat(simpleHashMap.get(second), is(2));
+        assertThat(simpleHashMap.size(), is(19));
         Iterator<Key> it = simpleHashMap.iterator();
-        assertThat(it.next().i, is(2));
-        assertThat(it.next().i, is(3));
-        assertThat(it.next().i, is(4));
-        assertThat(it.next().i, is(5));
-        assertThat(it.next().i, is(6));
-        assertThat(it.next().i, is(7));
-        assertThat(it.next().i, is(8));
-        assertThat(it.next().i, is(9));
-        assertThat(it.hasNext(), is(false));
+        int j = 2;
+        while (it.hasNext()) {
+            assertThat(it.next().i, is(j));
+            j++;
+        }
+        SimpleHashMap<Object, Integer> simpleHashMap2 = new SimpleHashMap<>();
+        simpleHashMap2.insert(new Object(), 1);
     }
 }
 
