@@ -56,7 +56,6 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     boolean insert(K key, V value) {
         boolean result;
         int index = (table.length - 1) & hash(key);
-       // int index = hash(key);
         Node<K, V> p = table[index];
         if (p == null) {
             table[index] = new Node(key, value);
@@ -79,8 +78,8 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     public V get(K key) {
         V result = null;
         if (key != null) {
-            if (table[hash(key)] != null) {
-                result = table[hash(key)].getValue();
+            if (table[(table.length - 1) & hash(key)] != null) {
+                result = table[(table.length - 1) & hash(key)].getValue();
             }
         }
         return result;
@@ -93,8 +92,8 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     boolean delete(K key) {
         boolean result = false;
         if (key != null) {
-            if (table[hash(key)] != null) {
-                table[hash(key)] = null;
+            if (table[(table.length - 1) & hash(key)] != null) {
+                table[(table.length - 1) & hash(key)] = null;
                 this.count--;
                 result = true;
             }
@@ -113,8 +112,8 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
         for (int j = 0; j < table.length; j++) {
             e = table[j];
             if (e != null) {
-                if (newTab[hash(e.key)] == null) {
-                    newTab[hash(e.key)] = e;
+                if (newTab[(table.length - 1) & hash(e.key)] == null) {
+                    newTab[(table.length - 1) & hash(e.key)] = e;
 
                 } else {
                     newTab = resize(newTab.length);
