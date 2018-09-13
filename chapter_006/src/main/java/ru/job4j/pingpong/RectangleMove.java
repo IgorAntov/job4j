@@ -17,6 +17,9 @@ public class RectangleMove implements Runnable {
     public void run() {
         byte direction = 1;
         while (true) {
+            if (Thread.currentThread().isInterrupted()) {
+                break;
+            }
             this.rect.setX(this.rect.getX() + direction);
             if (rect.getX() == 290) {
                 direction = -1;
@@ -28,7 +31,7 @@ public class RectangleMove implements Runnable {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                break;
+                Thread.currentThread().interrupt();
             }
         }
     }

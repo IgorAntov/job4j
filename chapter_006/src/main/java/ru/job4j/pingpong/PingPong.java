@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.util.*;
+
 /**
  * @author Igor Antropov
  * @version $Id$
