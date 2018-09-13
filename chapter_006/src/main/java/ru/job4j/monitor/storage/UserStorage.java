@@ -1,4 +1,4 @@
-package ru.job4j.storage;
+package ru.job4j.monitor.storage;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
@@ -22,6 +22,11 @@ public class UserStorage {
         return true;
     }
 
+    /**
+     * Method updates user from Array
+     * @param user
+     * @return
+     */
     synchronized public boolean update(User user) {
         boolean result = false;
         int i = findByUser(user);
@@ -32,6 +37,11 @@ public class UserStorage {
         return result;
     }
 
+    /**
+     * Method deletes user from Array
+     * @param user
+     * @return
+     */
     synchronized public boolean delete(User user) {
         boolean result = false;
         int i = findByUser(user);
@@ -42,6 +52,13 @@ public class UserStorage {
         return result;
     }
 
+    /**
+     * Method transfers amount from one user to other
+     * @param fromId
+     * @param toId
+     * @param amount
+     * @return
+     */
     synchronized public boolean transfer(int fromId, int toId, int amount) {
         boolean result = false;
         if (fromId != toId) {
@@ -56,6 +73,11 @@ public class UserStorage {
         return result;
     }
 
+    /**
+     * Method finds user, that is based on ID
+     * @param user
+     * @return
+     */
     synchronized private int findByUser(User user) {
         int result = -1;
         for (int i = 0; i < userStore.size(); i++) {
@@ -66,6 +88,11 @@ public class UserStorage {
         return result;
     }
 
+    /**
+     * Method finds user
+     * @param id
+     * @return
+     */
     synchronized private int findById(int id) {
         int result = -1;
         for (int i = 0; i < userStore.size(); i++) {
@@ -77,6 +104,11 @@ public class UserStorage {
         return result;
     }
 
+    /**
+     * Method gets user from Array
+     * @param i
+     * @return
+     */
     synchronized public User getUser(int i) {
         return userStore.get(findById(i));
     }

@@ -1,5 +1,10 @@
-package ru.job4j.storage;
+package ru.job4j.monitor.storage;
 
+/**
+ * @author Igor Antropov
+ * @version $Id$
+ * @since 0.1
+ */
 public class User {
     private int id;
     private int amount;
