@@ -2,6 +2,13 @@ package ru.job4j.wait;
 
 import org.junit.Test;
 
+/**
+ * Test.
+ *
+ * @author Igor Antropov
+ * @version $Id$
+ * @since 0.1
+ */
 public class SimpleBlockingQueueTest {
 
     @Test
