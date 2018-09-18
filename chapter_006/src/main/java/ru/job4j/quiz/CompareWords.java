@@ -9,32 +9,20 @@ import java.util.*;
  */
 public class CompareWords {
 
-    public boolean eql(ArrayList arrayList1, ArrayList arrayList2) {
+    public boolean eql(String wordOne, String wordTwo) {
+        HashMap<Character, Integer> array = new HashMap<>();
         boolean result = false;
-        if (arrayList1.size() == arrayList2.size()) {
-            arrayList1.sort(new Comparator() {
-                @Override
-                public int compare(Object o1, Object o2) {
-                    return (char) o1 - (char) o2;
-                }
-            });
-            arrayList2.sort(new Comparator() {
-                @Override
-                public int compare(Object o1, Object o2) {
-                    return (char) o1 - (char) o2;
-                }
-            });
-
-            for (int i = 0; i < arrayList1.size(); i++) {
-                if (arrayList1.get(i) != arrayList2.get(i)) {
-                    result = false;
-                    break;
-                } else {
-                    result = true;
-                }
+        if (wordOne.length() == wordTwo.length()) {
+            for (int i = 0; i < wordOne.length(); i++) {
+                array.put(wordOne.charAt(i), i);
+            }
+            for (int i = 0; i < wordOne.length(); i++) {
+                array.remove(wordTwo.charAt(i));
+            }
+            if (array.isEmpty()) {
+                result = true;
             }
         }
         return result;
     }
-
 }
