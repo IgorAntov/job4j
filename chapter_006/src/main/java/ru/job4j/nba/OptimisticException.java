@@ -1,4 +1,13 @@
 package ru.job4j.nba;
 
-public class OptimisticException {
+/**
+ * @author Igor Antropov
+ * @version $Id$
+ * @since 0.1
+ */
+public class OptimisticException extends RuntimeException {
+
+    public OptimisticException(String msg) {
+        super(msg);
+    }
 }
