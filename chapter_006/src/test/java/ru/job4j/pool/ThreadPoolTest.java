@@ -34,18 +34,18 @@ public class ThreadPoolTest {
     @Test
     public void whenRunTenTasksThenShutdownThreads() {
         ThreadPool threadPool = new ThreadPool();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             int fi = i;
             threadPool.work(new Runnable() {
                 @Override
                 public void run() {
-                        System.out.print("Task" + fi);
+                        System.out.print("TaskIsDone.");
                 }
             });
         }
         threadPool.start();
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
             threadPool.shutdown();
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class ThreadPoolTest {
                 new String(out.toByteArray()),
                 is(
                         new StringBuilder()
-                                .append("Task0Task1Task2Task3Task4Task5Task6Task7Task8Task9")
+                                .append("TaskIsDone.TaskIsDone.TaskIsDone.TaskIsDone.TaskIsDone.")
                                 .toString()
                 )
         );

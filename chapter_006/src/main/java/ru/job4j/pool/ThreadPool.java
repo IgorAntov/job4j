@@ -14,7 +14,6 @@ public class ThreadPool {
 
     public final List<Thread> thread = new LinkedList<>();
     public final Queue<Runnable> tasks = new LinkedBlockingQueue<>();
-    private boolean shutdown;
 
     public ThreadPool() {
         int cores = Runtime.getRuntime().availableProcessors();
@@ -23,11 +22,10 @@ public class ThreadPool {
                 @Override
                 public void run() {
                     try {
-                        while (!shutdown) {
+                        while (!Thread.currentThread().isInterrupted()) {
                             poll().run();
                         }
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 }
             }));
@@ -74,6 +72,8 @@ public class ThreadPool {
      * Method stops task running
      */
     public void shutdown() {
-        shutdown = true;
+        for (Thread t: thread) {
+            t.interrupt();
+        }
     }
 }
