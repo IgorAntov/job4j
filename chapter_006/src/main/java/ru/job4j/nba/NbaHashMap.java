@@ -1,8 +1,5 @@
 package ru.job4j.nba;
 
-import net.jcip.annotations.GuardedBy;
-import net.jcip.annotations.ThreadSafe;
-
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -10,12 +7,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @version $Id$
  * @since 0.1
  */
-@ThreadSafe
 public class NbaHashMap {
-    @GuardedBy("this")
     ConcurrentHashMap<Integer, Base> hashMap = new ConcurrentHashMap<>();
 
-    public synchronized void add(Integer key, Base model) {
+    public void add(Integer key, Base model) {
         hashMap.put(key, model);
     }
 
@@ -28,11 +23,11 @@ public class NbaHashMap {
         });
     }
 
-    public synchronized void delete(Integer key) {
+    public void delete(Integer key) {
         hashMap.remove(key);
     }
 
-    public synchronized Base get(int key) {
+    public Base get(int key) {
         return hashMap.get(key);
     }
 }
