@@ -7,19 +7,21 @@ package ru.job4j.wait;
  */
 public class Producer<T> extends Thread {
     private SimpleBlockingQueue<T> simpleBlockingQueue;
-    private T prod;
+    private T value;
 
-    public Producer(SimpleBlockingQueue<T> simpleBlockingQueue, T prod) {
+    public Producer(SimpleBlockingQueue<T> simpleBlockingQueue, T value) {
         this.simpleBlockingQueue = simpleBlockingQueue;
-        this.prod = prod;
-    }
-
-    public void add(T value) {
-        simpleBlockingQueue.offer(value);
+        this.value = value;
     }
 
     @Override
     public void run() {
-        this.add(this.prod);
+        this.simpleBlockingQueue.offer(this.value);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
 }

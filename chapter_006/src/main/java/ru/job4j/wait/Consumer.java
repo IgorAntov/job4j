@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Consumer<T> extends Thread {
     private SimpleBlockingQueue<T> simpleBlockingQueue;
-    private List<T> array = new ArrayList<>();
+    private List<T> consumerArray = new ArrayList<>();
 
     public Consumer(SimpleBlockingQueue<T> simpleBlockingQueue) {
         this.simpleBlockingQueue = simpleBlockingQueue;
@@ -19,7 +19,11 @@ public class Consumer<T> extends Thread {
     @Override
     public void run() {
         try {
-            array.add(simpleBlockingQueue.poll());
+            Thread.sleep(1000);
+            while (true) {
+                consumerArray.add(simpleBlockingQueue.poll());
+                Thread.sleep(1000);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
