@@ -8,11 +8,13 @@ package ru.job4j.bomberman;
 public class Player {
     private Board board;
     private Cell cell;
+    private String typePlayer;
 
-    public Player(Board board, Cell cell) {
+    public Player(Board board, Cell cell, String typePlayer) {
         this.board = board;
         this.cell = cell;
-        System.out.println(Thread.currentThread().getName() + " Initial cell ["+ cell.getX() +"]["+ cell.getY() +"]");
+        this.typePlayer = typePlayer;
+        System.out.println(Thread.currentThread().getName() + "(" + typePlayer + ")" + " Initial cell [" + cell.getX() + "][" + cell.getY() + "]");
     }
 
     /**
@@ -22,8 +24,14 @@ public class Player {
         int steps = board.getStepsForPlayers();
         for (int i = 0; i < steps; i++) {
             Cell nextCell = board.nextStep(this.cell);
-            if (board.move(this.cell, nextCell)) {
-                this.cell = nextCell;
+            if (typePlayer.equals("MONSTER")) {
+                if (board.move(this.cell, nextCell, 5000)) {
+                    this.cell = nextCell;
+                }
+            } else {
+                if (board.move(this.cell, nextCell, 500)) {
+                    this.cell = nextCell;
+                }
             }
         }
     }
