@@ -26,6 +26,7 @@ public class ThreadPool {
                             poll().run();
                         }
                     } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
                     }
                 }
             }));
