@@ -14,7 +14,7 @@ public class Player {
         this.board = board;
         this.cell = cell;
         this.typePlayer = typePlayer;
-        System.out.println(Thread.currentThread().getName() + "(" + typePlayer + ")" + " Initial cell [" + cell.getX() + "][" + cell.getY() + "]");
+        System.out.println(String.format( "%s ( %s ) Initial cell [%s][%s]", Thread.currentThread().getName(), typePlayer, cell.getX(),cell.getY()));
     }
 
     /**

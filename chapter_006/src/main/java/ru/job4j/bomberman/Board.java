@@ -66,18 +66,18 @@ public class Board {
         boolean result = false;
         try {
             boolean cellFree;
-            System.out.println(Thread.currentThread().getName() + " Try to lock and move to Cell [" + dest.getX() + "][" + dest.getY() + "]");
+            System.out.println(String.format(" %s Try to lock and move to Cell [%s][%s]", Thread.currentThread().getName(), dest.getX(), dest.getY()));
             cellFree = board[dest.getX()][dest.getY()].tryLock(time, TimeUnit.MILLISECONDS);
             if (cellFree) {
-                System.out.println(Thread.currentThread().getName() + " Lock acquired. Moved to new Cell [" + dest.getX() + "][" + dest.getY() + "]. Old Cell[" + source.getX() + "][" + source.getY() + "]");
+                System.out.println(String.format(" %s Lock acquired. Moved to new Cell [%s][%s]. Old Cell[%s][%s]", Thread.currentThread().getName(), dest.getX(), dest.getY(), source.getX(), source.getY()));
                 if (board[source.getX()][source.getY()].isLocked()) {
                     board[source.getX()][source.getY()].unlock();
-                    System.out.println(Thread.currentThread().getName() + ": UnLock board[" + source.getX() + "][" + source.getY() + "] acquired.");
+                    System.out.println(String.format(" %s: UnLock board[%s][%s] acquired.", Thread.currentThread().getName(), source.getX(), source.getY()));
                 }
                 result = true;
                 Thread.sleep(1000);
             } else {
-                System.out.println(Thread.currentThread().getName() + ": Lock was refused...");
+                System.out.println(String.format("%s Lock was refused...", Thread.currentThread().getName()));
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
