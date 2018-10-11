@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 0.1
  */
 public class NbaHashMap {
-    ConcurrentHashMap<Integer, Base> hashMap = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<Integer, Base> hashMap = new ConcurrentHashMap<>();
 
     public void add(Integer key, Base model) {
         hashMap.put(key, model);
