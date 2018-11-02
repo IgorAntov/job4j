@@ -1,8 +1,8 @@
 package ru.job4j.tracker.action;
 
+import ru.job4j.tracker.storage.ITracker;
 import ru.job4j.tracker.input.Input;
 import ru.job4j.tracker.model.Item;
-import ru.job4j.tracker.storage.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ class EditItem extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         if (tracker.listNotEmpty()) {
             String id = input.ask("Введите id заявки");
             String name = input.ask("Введите имя заявки :");
@@ -44,7 +44,7 @@ class FindByName extends BaseAction {
     }
 
     @Override
-    public void execute(Input input, Tracker tracker) {
+    public void execute(Input input, ITracker tracker) {
         List<Item> result = new ArrayList<>();
         System.out.println("------------ Поиск заявки по имени: --------------");
         String id = input.ask("Введите имя заявки:");
@@ -66,10 +66,10 @@ class FindByName extends BaseAction {
 public class MenuTracker {
 
     private Input input;
-    private Tracker trecker;
+    private ITracker trecker;
     private int position = 0;
 
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, ITracker tracker) {
         this.input = input;
         this.trecker = tracker;
     }
@@ -124,7 +124,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             List<Item> result = new ArrayList<>();
             System.out.println("------------ Лист заявок: --------------");
             result = tracker.findAll();
@@ -151,7 +151,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             System.out.println("------------ Поиск заявки по id: --------------");
             String id = input.ask("Введите id заявки:");
             Item result = tracker.findById(id);
@@ -178,7 +178,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             System.out.println("------------ Добавление новой языки --------------");
             String name = input.ask("Введите имя заявки :");
             String desc = input.ask("Введите описание заявки :");
@@ -198,7 +198,7 @@ public class MenuTracker {
             super(key, name);
         }
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             if (tracker.listNotEmpty()) {
                 System.out.println("------------ Удаление заявки --------------");
                 String id = input.ask("Введите id заявки которую требуется удалить:");
@@ -223,7 +223,7 @@ public class MenuTracker {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(Input input, ITracker tracker) {
             exit = false;
         }
 

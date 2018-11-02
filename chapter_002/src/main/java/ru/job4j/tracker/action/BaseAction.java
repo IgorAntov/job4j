@@ -1,7 +1,7 @@
 package ru.job4j.tracker.action;
 
+import ru.job4j.tracker.storage.ITracker;
 import ru.job4j.tracker.input.Input;
-import ru.job4j.tracker.storage.Tracker;
 
 public abstract class BaseAction implements UserAction {
 
@@ -17,7 +17,7 @@ public abstract class BaseAction implements UserAction {
         return this.key;
     }
 
-    public abstract void execute(Input input, Tracker tracker);
+    public abstract void execute(Input input, ITracker tracker);
 
     public String info() {
         return String.format("%s. %s\n", this.key(), this.name);

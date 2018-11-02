@@ -1,5 +1,6 @@
 package ru.job4j.tracker.start;
 
+import ru.job4j.tracker.storage.ITracker;
 import ru.job4j.tracker.action.MenuTracker;
 import ru.job4j.tracker.input.ConsoleInput;
 import ru.job4j.tracker.input.Input;
@@ -13,9 +14,9 @@ import ru.job4j.tracker.storage.Tracker;
  */
 public class StartUI {
     private Input input;
-    private Tracker tracker;
+    private ITracker tracker;
 
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(Input input, ITracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -30,7 +31,7 @@ public class StartUI {
     }
 
     public static void main(String[] args) {
-        Tracker tracker = new Tracker();
+        ITracker tracker = new Tracker();
         Input input = new ValidateInput(new ConsoleInput());
         new StartUI(input, tracker).init();
     }

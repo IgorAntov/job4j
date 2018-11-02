@@ -9,8 +9,15 @@ String description;
 String id;
 Date createDate;
 
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-public Item(String name, String description) {
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Item(String name, String description) {
     this.name = name;
     this.description = description;
 }
