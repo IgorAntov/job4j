@@ -35,6 +35,7 @@ insert into product(name, expired_date, price, type_id)  values ('Молоко',
 insert into product(name, expired_date, price, type_id)  values ('Мороженое Пломбир', '2018-12-3', 100, 4);
 insert into product(name, expired_date, price, type_id)  values ('Мороженое Сливочное', '2018-12-3', 150, 4);
 insert into product(name, expired_date, price, type_id)  values ('Творог', '2018-11-25', 200, 4);
+
  --1. Написать запрос получение всех продуктов с типом "СЫР"
 select p.name from product p inner join type t on  p.type_id = t.id where t.name = 'СЫР';
 --2. Написать запрос получения всех продуктов, у кого в имени есть слово "мороженное"
