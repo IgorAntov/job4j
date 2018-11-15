@@ -45,7 +45,7 @@ public class StoreSQL {
         try (PreparedStatement psD = connection.prepareStatement(sqlDel);
               PreparedStatement psI = connection.prepareStatement(sqlInsert)) {
             connection.setAutoCommit(false);
-            for (int i = 0; i < n; i++) {
+            for (int i = 1; i <= n; i++) {
                 psI.setInt(1, i);
                 psI.addBatch();
             }
