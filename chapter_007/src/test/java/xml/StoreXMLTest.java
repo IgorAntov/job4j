@@ -15,7 +15,7 @@ public class StoreXMLTest {
     @Test
     public void testXML() {
         StoreSQL storeSQL = new StoreSQL(new Config());
-        storeSQL.generate(100);
+        storeSQL.generate(1000000);
         File file = new File("testxml.xml");
         StoreXML storeXML = new StoreXML(file);
         try {
