@@ -41,13 +41,18 @@ public class StoreSQL {
      */
     public void generate(int n) {
         String sqlDel = "DELETE from entry;";
-        String sqlInsert = "with recursive nn (n) as (select 1 union all select n+1 as newn from nn where newn < ?) insert into entry select n from nn;";
-
+        String sqlInsert = "Insert into entry values(?)";
         try (PreparedStatement psD = connection.prepareStatement(sqlDel);
               PreparedStatement psI = connection.prepareStatement(sqlInsert)) {
-            psI.setInt(1, n + 1);
+            connection.setAutoCommit(false);
+            for (int i = 0; i < n; i++) {
+                psI.setInt(1, i);
+                psI.addBatch();
+            }
             psD.executeUpdate();
-            psI.executeUpdate();
+            psI.executeBatch();
+            connection.commit();
+            connection.setAutoCommit(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
