@@ -20,7 +20,7 @@ public class SimpleBlockingQueueTest2 {
     public void whenFetchAllThenGetIt() throws InterruptedException {
 
         final CopyOnWriteArrayList<Integer> buffer = new CopyOnWriteArrayList<>();
-        final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>();
+        final SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<>(5);
 
         Thread producer = new Thread(
                 () -> {

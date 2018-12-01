@@ -1,4 +1,4 @@
-package xml;
+package ru.job4j.xml;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

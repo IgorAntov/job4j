@@ -1,4 +1,4 @@
-package xml;
+package ru.job4j.xml;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;

@@ -1,4 +1,4 @@
-package ru.job4j.arrays;
+package ru.job4j.monitor.arrays;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
@@ -13,7 +13,7 @@ public class MtLinkedList<E> {
     @GuardedBy("this")
     private final SimpleLinkedList<E> array = new SimpleLinkedList<>();
 
-    synchronized public boolean add( E value) {
+    synchronized public boolean add(E value) {
         this.array.add(value);
         return true;
     }

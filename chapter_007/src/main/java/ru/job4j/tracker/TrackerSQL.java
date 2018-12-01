@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 import ru.job4j.tracker.model.Item;
 import ru.job4j.tracker.storage.ITracker;

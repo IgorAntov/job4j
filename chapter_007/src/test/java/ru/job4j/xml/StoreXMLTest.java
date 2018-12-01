@@ -1,4 +1,4 @@
-package xml;
+package ru.job4j.xml;
 
 import org.junit.Test;
 
@@ -14,9 +14,9 @@ public class StoreXMLTest {
 
     @Test
     public void testXML() {
-        StoreSQL storeSQL = new StoreSQL(new Config());
-        storeSQL.generate(1000000);
-        File file = new File("testxml.xml");
+        StoreSQL storeSQL = new StoreSQL(new ConfigApp());
+        storeSQL.generate(100);
+        File file = new File("testxml.ru.job4j.xml");
         StoreXML storeXML = new StoreXML(file);
         try {
             storeXML.save(storeSQL.doEntryList());
@@ -28,12 +28,12 @@ public class StoreXMLTest {
     @Test
     public void xsqtTest() {
         ConvertXSQT convertXSQT = new ConvertXSQT();
-        convertXSQT.convert(new File("testxml.xml"), new File("testxsqt.xml"), new File("testxsl.xsl"));
+        convertXSQT.convert(new File("testxml.ru.job4j.xml"), new File("testxsqt.ru.job4j.xml"), new File("testxsl.xsl"));
     }
 
     @Test
     public void saxTest() {
         ConvertSAX convertSAX = new ConvertSAX();
-        convertSAX.convertSax(new File("testxml.xml"));
+        convertSAX.convertSax(new File("testxml.ru.job4j.xml"));
     }
 }

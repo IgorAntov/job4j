@@ -1,4 +1,4 @@
-package xml;
+package ru.job4j.xml;
 
 import java.io.InputStream;
 import java.util.Properties;
@@ -8,11 +8,11 @@ import java.util.Properties;
  * @version $Id$
  * @since 0.1
  */
-public class Config {
+public class ConfigApp {
 
     private final Properties values = new Properties();
 
-    public Config() {
+    public ConfigApp() {
         this.init();
     }
 
@@ -20,7 +20,7 @@ public class Config {
      * Method initiates connection properties to DB
      */
     public void init() {
-        try (InputStream in = Config.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in = ConfigApp.class.getClassLoader().getResourceAsStream("app.properties")) {
             values.load(in);
         } catch (Exception e) {
             throw new IllegalStateException(e);

@@ -1,4 +1,4 @@
-CREATE DATABASE tracker OWNER pcontrol;
+CREATE DATABASE ru.job4j.tracker OWNER pcontrol;
 
 create table role_rights (
   id serial primary key,

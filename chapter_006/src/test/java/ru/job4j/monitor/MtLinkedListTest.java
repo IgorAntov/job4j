@@ -1,6 +1,8 @@
-package ru.job4j.arrays;
+package ru.job4j.monitor;
 
 import org.junit.Test;
+import ru.job4j.monitor.arrays.MtArrayList;
+
 import java.util.Iterator;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;

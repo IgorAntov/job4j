@@ -1,9 +1,10 @@
-package xml;
+package ru.job4j.xml;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 
 /**
  * @author Igor Antropov
@@ -14,7 +15,7 @@ public class StoreSQL {
 
     private Connection connection;
 
-    public StoreSQL(Config config) {
+    public StoreSQL(ConfigApp config) {
         String sql = "CREATE TABLE if not exists entry (field INTEGER)";
         String url = config.get("sqlite-url");
         try {

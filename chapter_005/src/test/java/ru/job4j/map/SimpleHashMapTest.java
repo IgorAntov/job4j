@@ -35,7 +35,7 @@ public class SimpleHashMapTest {
         SimpleHashMap<Key, Integer> simpleHashMap = new SimpleHashMap<>();
         Key first = new Key(1);
         assertThat(simpleHashMap.insert(first, 1), is(true));
-        for (int i = 2; i <= 20; i++ ) {
+        for (int i = 2; i <= 20; i++) {
             simpleHashMap.insert(new Key(i), i);
         }
         assertThat(simpleHashMap.delete(first), is(true));

@@ -1,4 +1,4 @@
-package tracker;
+package ru.job4j.tracker;
 
 import ru.job4j.tracker.input.ConsoleInput;
 import ru.job4j.tracker.input.Input;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?ru.job4j.xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -7,10 +7,12 @@
         <groupId>ru.job4j</groupId>
         <version>2.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>chapter_007</artifactId>
-    <dependencies>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>SqlRuParser</artifactId>
+    <packaging>jar</packaging>
+
+     <dependencies>
         <dependency>
             <groupId>ru.job4j</groupId>
             <artifactId>chapter_002</artifactId>
@@ -20,6 +22,31 @@
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.1-901-1.jdbc4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
         </dependency>
     </dependencies>
 </project>
