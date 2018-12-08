@@ -1,5 +1,4 @@
 package ru.job4j.parsing;
-
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /**
  * @author Igor Antropov
@@ -20,7 +20,6 @@ import java.util.Date;
  * @since 0.1
  */
 public class ParsingScheduler implements Job {
-
     private static final Logger LOG = Logger.getLogger(ParsingScheduler.class);
     private Config config;
     private static String property;
@@ -29,12 +28,10 @@ public class ParsingScheduler implements Job {
     private final String keyWord = "java";
     private final String keyWordExcl1 = "javascript";
     private final String keyWordExcl2 = "javas script";
-
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         runParsing();
     }
-
     /**
      * Method initiate Sql.ru vacancy Parsing
      */
@@ -47,11 +44,9 @@ public class ParsingScheduler implements Job {
             e.printStackTrace();
         }
     }
-
     public static void setProperty(String p) {
         property = p;
     }
-
     /**
      * Method performs DB connection and creates DB tables "vacancy", "runtime"
      */
@@ -64,7 +59,6 @@ public class ParsingScheduler implements Job {
         String url = config.get("sqlite-url");
         try {
             Class.forName(config.get("sqlite-driver-class-name"));
-
             connection = DriverManager.getConnection(url);
             if (connection != null) {
                 DatabaseMetaData meta = connection.getMetaData();
@@ -80,7 +74,6 @@ public class ParsingScheduler implements Job {
             e.printStackTrace();
         }
     }
-
     /**
      * Method initiate vacancy searching
      *
@@ -97,7 +90,6 @@ public class ParsingScheduler implements Job {
         }
         saveLastScan();
     }
-
     /**
      * Method gets last scan date
      *
@@ -120,7 +112,6 @@ public class ParsingScheduler implements Job {
         }
         return lastScanTime;
     }
-
     /**
      * This method saves last scan date in BD in table "runtime"
      */
@@ -132,7 +123,6 @@ public class ParsingScheduler implements Job {
             e.printStackTrace();
         }
     }
-
     /**
      * Method performs scan of the sql.ru page
      * @param keyword  - search keyword
@@ -149,14 +139,14 @@ public class ParsingScheduler implements Job {
         String date;
         int elementCount = 0;
         int notExceptCount = 0;
-        int badCount = 3;
+        int badCount = 10;
+        String elementText;
+        Pattern p = Pattern.compile(".+java (?!script).+");
         Document doc = Jsoup.connect(url).get();
         Elements aElements = doc.select("td.postslisttopic");
         for (Element aElement : aElements) {
-            if (aElement.select("a").first().text().toLowerCase().contains(keyword)
-                    && !aElement.select("a").first().text().toLowerCase().contains(keyword2)
-                    && !aElement.select("a").first().text().toLowerCase().contains(keyword3)
-                    ) {
+              elementText = aElement.select("a").first().text().toLowerCase();
+              if (p.matcher(elementText).matches()) {
                 name = aElement.select("a").first().text();
                 link = aElement.select("a").first().attr("href");
                 Document doc2 = Jsoup.connect(aElement.select("a").first().attr("href")).get();
@@ -165,8 +155,7 @@ public class ParsingScheduler implements Job {
                 date = doc2.select("td.msgFooter").first().text().substring(0, index);
                 Vacancy vacancy = new Vacancy(name, text, link, date);
                 if (isValidDate(vacancy, lastScan)) {
-                    if (checkRecord(vacancy))
-                    {
+                    if (checkRecord(vacancy)) {
                         insertVacToDB(vacancy);
                         LOG.info(String.format("%s\n%s\n\n%s\n -----------------------\n", vacancy.getName(), vacancy.getLink(), vacancy.getText()));
                     }
@@ -174,19 +163,17 @@ public class ParsingScheduler implements Job {
                     notExceptCount++;
                 }
                 if (notExceptCount > badCount) {
-                    result = false;
+                   result = false;
                     break;
                 }
             }
             elementCount++;
-            if (elementCount < 10) {
-                result = false;
-                break;
-            }
+        }
+        if (elementCount < 10) {
+            result = false;
         }
         return result;
     }
-
     /**
      * This method checks that found vacancy within the valid period
      * @param vacancy - parsed vacancy
@@ -212,7 +199,6 @@ public class ParsingScheduler implements Job {
         d.setTime(endDate);
         return result;
     }
-
     /**
      * Insert to DB new vacancy record
      * @param vacancy - parsed vacancy
@@ -229,7 +215,6 @@ public class ParsingScheduler implements Job {
         }
         return vacancy;
     }
-
     /**
      *  method checks the presence of a record in ВИ for uniqueness
      * @param vacancy
@@ -253,8 +238,6 @@ public class ParsingScheduler implements Job {
         return result;
     }
 }
-
-
 /**
  * This Main Class that reads prompt input parameter
  * his parameter is property file name
@@ -268,7 +251,6 @@ class SqlRuParsing {
         }
         initScheduler();
     }
-
     /**
      * Method initiates job Schedule every 12 hours
      */
