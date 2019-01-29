@@ -14,46 +14,11 @@ import java.util.List;
  * @version $Id$
  * @since 0.1
  */
-public class TrackerSQL  implements ITracker, Cloneable {
+public class TrackerSQL  implements ITracker, Cloneable, AutoCloseable {
     private Connection connection;
 
-    public TrackerSQL() {
-        if (!this.init()) {
-            System.out.println("Connection issue.");
-        } else {
-            String query = "create table if not exists items (\n"
-                    + "  id serial primary key,\n"
-                    + "  name varchar(100),\n"
-                    + "  description varchar(100),\n"
-                    + "  date timestamp\n"
-                    + ")";
-            try (Statement st = connection.createStatement()) {
-                st.executeUpdate(query);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * DataBase connection initialization
-     * @return
-     */
-    public boolean init() {
-        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
-            Properties config = new Properties();
-            config.load(in);
-            System.out.printf(config.getProperty("driver-class-name"));
-            Class.forName(config.getProperty("driver-class-name"));
-            this.connection = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password")
-            );
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-        return this.connection != null;
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
     }
 
     /**
@@ -190,5 +155,10 @@ public class TrackerSQL  implements ITracker, Cloneable {
             ex.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public void close() throws Exception {
+        connection.close();
     }
 }
