@@ -33,7 +33,7 @@ public class ConvertList2Array {
         }
         if (list.size() / rows != cells) {
             for (int i = list.size(); i < cells; i++) {
-                array [row][i] = 0;
+                array[row][i] = 0;
             }
         }
         return array;
