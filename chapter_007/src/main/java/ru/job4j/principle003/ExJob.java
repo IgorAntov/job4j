@@ -13,7 +13,7 @@ public class ExJob {
 
     public static void main(String[] args) {
         int version = 1;
-        int version2= 2;
+        int version2 = 2;
         LOG.trace("trace message {}", version);
         LOG.debug("trace message {}", version);
         LOG.info("trace message {}", version);
