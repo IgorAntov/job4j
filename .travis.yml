@@ -5,7 +5,8 @@ services:
 - postgresql
 
 before_install:
-- psql -c 'create database tracker;' -U pcontrol
+- psql -c 'create database tracker;' -U postgres
+- psql -c "CREATE USER pcontrol WITH PASSWORD 'Sahalin11';" -U postgres
 
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
