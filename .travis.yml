@@ -3,6 +3,7 @@ language: java
 
 services:
 - postgresql
+- sqlite
 
 before_install:
 - psql -c 'create database tracker;' -U postgres
