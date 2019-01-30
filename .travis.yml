@@ -10,11 +10,6 @@ before_install:
 - psql -c 'create database tracker;' -U postgres
 - psql -c "CREATE USER pcontrol WITH PASSWORD 'Sahalin11';" -U postgres
 
-gem "jdbc-sqlite3", :platform => :jruby
-
-ActiveRecord::Base.establish_connection :adapter => 'sqlite3',
-                                        :database => ':mysqlitedb:'
-
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
 
