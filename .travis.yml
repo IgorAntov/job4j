@@ -5,7 +5,7 @@ services:
 - postgresql
 
 before_install:
-- psql -c 'create database tracker;' -U postgres
+- psql -c 'create database tracker;' -U pcontrol
 
 # используем режим обычного пользователя для сборки проекта.
 sudo: false
