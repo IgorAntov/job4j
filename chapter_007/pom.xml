@@ -59,8 +59,8 @@
                     <changeLogFile>${basedir}/db/master.xml</changeLogFile>
                     <url>jdbc:postgresql://127.0.0.1:5432/tracker</url>
                     <driver>org.postgresql.Driver</driver>
-                    <username>postgres</username>
-                    <password></password>
+                    <username>pcontrol</username>
+                    <password>Sahalin11</password>
                 </configuration>
                 <executions>
                     <execution>
