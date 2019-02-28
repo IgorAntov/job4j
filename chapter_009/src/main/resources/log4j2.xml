@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <properties>
+        <property name="filename">chapter_009/target/chat.log</property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} - %msg%n"/>
+        </Console>
+        <File name="File" fileName="${filename}">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} - %msg%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="ru.job4j.chat" level="info" additivity="false">
+            <AppenderRef ref="Console" level="error"/>
+            <AppenderRef ref="File" level="info"/>
+     </Logger>
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
