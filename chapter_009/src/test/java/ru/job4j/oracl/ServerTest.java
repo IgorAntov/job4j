@@ -46,7 +46,7 @@ public class ServerTest {
     @Test
     public void whenAskHelloThenGotReplayHiBuddy() throws IOException {
         this.testServer(
-                Joiner.on(LN).join("Hello Oracle", "exit"), String.format("Hi buddy%s%s", LN, LN)
+                Joiner.on(LN).join("Hello Oracle", "exit"), String.format("Hi%sbuddy%s%s", LN, LN, LN)
         );
     }
 }

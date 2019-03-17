@@ -19,7 +19,7 @@ public class Server {
 
     public Server(Socket socket) {
         this.socket = socket;
-        this.dbFrases.put("Hello Oracle", "Hi buddy\n");
+        this.dbFrases.put("Hello Oracle", "Hi\nbuddy\n");
         this.dbFrases.put("How are you", "Good\n");
     }
 

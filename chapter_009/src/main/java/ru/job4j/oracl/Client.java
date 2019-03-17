@@ -32,6 +32,7 @@ public class Client {
                 String str = in.readLine();
                 while (!str.isEmpty()) {
                     System.out.println(str);
+                    str = in.readLine();
                 }
                 line = console.nextLine();
                 out.println(line);
