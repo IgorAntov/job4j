@@ -4,6 +4,9 @@ import org.apache.commons.cli.*;
 import org.apache.commons.io.FilenameUtils;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.FileHandler;
@@ -191,8 +194,9 @@ public class Find {
      *
      * @param args
      */
-    public void commandLineParser(String[] args) {
+    public void commandLineParser(String[] args) throws Exception {
         Options options = new Options();
+
         HelpFormatter formatter = new HelpFormatter();
         CommandLineParser parser = new DefaultParser();
         options.addOption("d", true, "Initial search directory")
@@ -213,13 +217,17 @@ public class Find {
         } catch (ParseException e) {
             System.out.println(e.getMessage());
             formatter.printHelp("java -jar find.jar", header, options, footer, true);
-            System.exit(0);
+            throw new Exception();
         }
     }
 
     public static void main(String[] args) {
         Find find = new Find();
-        find.commandLineParser(args);
-        find.search();
+        try {
+            find.commandLineParser(args);
+            find.search();
+        } catch (Exception e) {
+            System.out.println("Error occur.");
+        }
     }
 }
