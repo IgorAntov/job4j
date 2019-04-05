@@ -11,7 +11,7 @@ import ru.job4j.srp.input.Input;
  */
 
 public class InteractCalc {
-    private Actions actions;
+    protected Actions actions;
 
     /**
      * Method initializes the interface IO.

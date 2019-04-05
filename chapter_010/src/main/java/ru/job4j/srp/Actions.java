@@ -19,10 +19,10 @@ public class Actions {
     /**
      * Based on this class, expand the calculator.
      */
-    private Calculator calculator = new Calculator();
+    protected Calculator calculator = new Calculator();
     private List<Action> action = new ArrayList<>();
 
-    Actions(Input input) {
+    public Actions(Input input) {
         this.input = input;
         fillActionList();
     }
@@ -76,8 +76,8 @@ public class Actions {
     /**
      * Extended class for Exit condition.
      */
-    class Exit extends SimpleAction {
-        Exit(int key, String taskName, Calculator calculator, Input input) {
+   protected class Exit extends SimpleAction {
+        public Exit(int key, String taskName, Calculator calculator, Input input) {
             super(key, taskName, calculator, input);
         }
 
