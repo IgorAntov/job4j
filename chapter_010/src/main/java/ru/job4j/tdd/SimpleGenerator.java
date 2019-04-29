@@ -23,13 +23,12 @@ public class SimpleGenerator implements Generator {
         Matcher matcher = keys.matcher(template);
         while (matcher.find()) {
             String key = matcher.group().substring(2, matcher.group().length() - 1);
-            if (map.containsKey(key)) {
+            if (!map.containsKey(key)) {
+                throw new MapIsEmptyException("Map is empty. Not enough keys in the map.");
+            }
                 template = template.replaceAll(String.format("\\$\\{%s}", key), map.get(key));
                 matcher = keys.matcher(template);
                 map.remove(key);
-            } else {
-                throw new MapIsEmptyException("Map is empty. Not enough keys in the map.");
-            }
         }
         if (!map.isEmpty()) {
             throw new ExtraKeysInMapException("There are extra keys in the map.");

@@ -1,7 +1,6 @@
 package ru.job4j.tdd;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -15,16 +14,11 @@ import static org.hamcrest.Matchers.is;
  * @since 0.1
  */
 public class SimpleGeneratorTest {
-    private SimpleGenerator simpleGenerator;
-
-    @Before
-    public void initTest() {
-        this.simpleGenerator = new SimpleGenerator();
-    }
 
     @Test
     public void whenTakeDuplicateKeyStringGetFormatString() {
         //assign
+        SimpleGenerator simpleGenerator = new SimpleGenerator();
         String inputText = "Help, ${sos}, ${sos}, ${sos}";
         Map<String, String> map = new HashMap<>();
         map.put("sos", "Aaa");
@@ -37,6 +31,7 @@ public class SimpleGeneratorTest {
     @Test
     public void whenTakeStringGetFormatString() {
         //assign
+        SimpleGenerator simpleGenerator = new SimpleGenerator();
         String inputText = "I am a ${name}, Who are ${subject}?";
         Map<String, String> map = new HashMap<>();
         map.put("name", "Igor");
@@ -50,6 +45,7 @@ public class SimpleGeneratorTest {
     @Test(expected = ExtraKeysInMapException.class)
     public void whenExtraKeysInMapGetExceptionExtraKeysInMap() {
         //assign
+        SimpleGenerator simpleGenerator = new SimpleGenerator();
         String inputText = "I am a ${name}, Who are ${subject}?";
         Map<String, String> map = new HashMap<>();
         map.put("name", "Igor");
@@ -62,6 +58,7 @@ public class SimpleGeneratorTest {
     @Test(expected = MapIsEmptyException.class)
     public void whenNotEnoughKeysInMapGetExceptionMapIsEmpty() {
         //assign
+        SimpleGenerator simpleGenerator = new SimpleGenerator();
         String inputText = "I am a ${name}, Who are ${subject}?";
         Map<String, String> map = new HashMap<>();
         map.put("name", "Igor");
