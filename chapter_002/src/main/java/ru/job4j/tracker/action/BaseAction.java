@@ -3,6 +3,8 @@ package ru.job4j.tracker.action;
 import ru.job4j.tracker.storage.ITracker;
 import ru.job4j.tracker.input.Input;
 
+import java.util.function.Consumer;
+
 public abstract class BaseAction implements UserAction {
 
     private final int key;
@@ -17,7 +19,7 @@ public abstract class BaseAction implements UserAction {
         return this.key;
     }
 
-    public abstract void execute(Input input, ITracker tracker);
+    public abstract void execute(Input input, ITracker tracker, Consumer<String> output);
 
     public String info() {
         return String.format("%s. %s\n", this.key(), this.name);

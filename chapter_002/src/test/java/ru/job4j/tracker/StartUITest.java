@@ -11,6 +11,8 @@ import ru.job4j.tracker.storage.Tracker;
 
 import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
+import java.util.function.Consumer;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -25,6 +27,15 @@ public class StartUITest {
 
     private final PrintStream stdout = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final Consumer<String> output = new Consumer<String>() {
+        private final PrintStream stdout = new PrintStream(out);
+
+        @Override
+        public void accept(String s) {
+            stdout.println(s);
+        }
+    };
+
 
     @Before
     public void loadOutput() {
@@ -46,7 +57,7 @@ public class StartUITest {
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();     // создаём Tracker
         Input input = new StubInput(new String[]{"0", "test", "desc", "6"});   //создаём StubInput с последовательностью действий
-        new StartUI(input, tracker).init();     //   создаём StartUI и вызываем метод init()
+        new StartUI(input, tracker, output).init();     //   создаём StartUI и вызываем метод init()
         assertThat(tracker.findAll().get(0).getName(), is("test")); // проверяем, что нулевой элемент массива в трекере содержит имя, введённое при эмуляции.
     }
 
@@ -59,7 +70,7 @@ public class StartUITest {
         Item item = new Item("test name", "desc");
         tracker.add(item);
         Input input = new StubInput(new String[]{"2", item.getId(), "test name2", "desc2", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findById(item.getId()).getName(), is("test name2"));
     }
 
@@ -74,7 +85,7 @@ public class StartUITest {
         Item item2 = new Item("test name2", "desc2");
         tracker.add(item2);
         Input input = new StubInput(new String[]{"3", item.getId(), "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0).getName(), is("test name2"));
     }
 
@@ -91,7 +102,7 @@ public class StartUITest {
         tracker.add(item2);
         item2.setId("456");
         Input input = new StubInput(new String[]{"1", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(
                 new String(out.toByteArray()),
                 is(
@@ -140,7 +151,7 @@ public class StartUITest {
         tracker.add(item2);
         item2.setId("456");
         Input input = new StubInput(new String[]{"4", "456", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(
                 new String(out.toByteArray()),
                 is(
@@ -190,7 +201,7 @@ public class StartUITest {
         tracker.add(item3);
         item3.setId("789");
         Input input = new StubInput(new String[]{"5", "test name2", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(
                 new String(out.toByteArray()),
                 is(
