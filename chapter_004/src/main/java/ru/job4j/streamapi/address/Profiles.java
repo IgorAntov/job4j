@@ -15,6 +15,6 @@ public class Profiles {
       }
 
     List<Address> collect2(List<Profile> profiles) {
-        return profiles.stream().map(profile -> profile.getAddress()).distinct().sorted(Comparator.comparing(Address::getCity)).collect(Collectors.toList());
+        return profiles.stream().map(profile -> profile.getAddress()).sorted(Comparator.comparing(Address::getCity)).distinct().collect(Collectors.toList());
     }
 }
