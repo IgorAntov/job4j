@@ -2,6 +2,7 @@ package ru.job4j.bank;
 
 import java.util.*;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 /**
  * @author Igor Antropov
@@ -42,7 +43,7 @@ public class Bank {
      * @param account
      */
     public void addAccountToUser(String passport, Account account) {
-        for (User e : treeMap.keySet()) {
+            for (User e : treeMap.keySet()) {
             if (e.getPassport().equals(passport)) {
                 treeMap.get(e).add(account);
             }
@@ -60,6 +61,7 @@ public class Bank {
                 treeMap.get(e).remove(account);
             }
         }
+
     }
 
     /**
