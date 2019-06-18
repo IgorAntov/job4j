@@ -1,6 +1,6 @@
 package ru.job4j.map;
 
-import jdk.nashorn.internal.ir.WhileNode;
+//import jdk.nashorn.internal.ir.WhileNode;
 import org.junit.Test;
 import java.util.Iterator;
 
