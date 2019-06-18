@@ -21,12 +21,12 @@ public class Profiling {
         }
         System.out.println("Adding items to List.");
         int size = 10000;
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             Item item = new Item("test name " + i, "desc" + i);
             tracker.add(item);
         }
         tracker.findAll().clear();
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             Item item = new Item("test name " + i, "desc" + i);
             tracker.add(item);
         }
