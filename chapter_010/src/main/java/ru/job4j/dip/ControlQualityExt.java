@@ -36,7 +36,7 @@ public class ControlQualityExt extends ControlQuality {
         List<Storage> storageSet = getStorages();
         for (Storage storage: storageSet) {
             List<FoodExt> tempList = ((FoodResort) storage).checkFood();
-            if(!addToStorageFromList(tempList)) {
+            if (!addToStorageFromList(tempList)) {
                 result = false;
             }
         }

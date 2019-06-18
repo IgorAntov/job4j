@@ -12,7 +12,7 @@ import ru.job4j.srp.input.Input;
  *
  * Сhild class extending interactive calculator to engineering
  */
-public class EngineerCalc extends InteractCalc{
+public class EngineerCalc extends InteractCalc {
 
     @Override
     public void init(Input input) {
