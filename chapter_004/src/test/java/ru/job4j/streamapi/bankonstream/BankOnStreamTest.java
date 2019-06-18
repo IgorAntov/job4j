@@ -97,4 +97,20 @@ public class BankOnStreamTest {
         bank.addAccountToUser("IS98745", dstAccount);
         assertThat(bank.transferMoney("AS12345", "123", "IS98745", "456", 100.0), is(false));
     }
+
+    /**
+     * Test Перечисление средств с несуществующего счета
+     */
+    @Test
+    public void whenTransferMoneyFomUserToUserNoTransfer() {
+        BankOnStream bank = new BankOnStream();
+        User srcUser = new User("igor", "AS12345");
+        User dstUser = new User("ivan", "IS98745");
+        bank.addUser(srcUser);
+        bank.addUser(dstUser);
+        Account dstAccount = new Account(100.0, "456");
+        bank.addAccountToUser("IS98745", dstAccount);
+        assertThat(bank.transferMoney("AS12345", "123", "IS98745", "456", 100.0), is(false));
+    }
+
 }

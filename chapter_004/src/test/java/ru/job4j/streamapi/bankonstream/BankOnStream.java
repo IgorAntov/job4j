@@ -4,9 +4,7 @@ import ru.job4j.bank.Account;
 import ru.job4j.bank.Bank;
 import ru.job4j.bank.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +23,7 @@ private boolean moved;
                 .filter(x -> x.getKey().getPassport().equals(passport))
                 .map(x -> x.getValue())
                 .collect(Collectors.collectingAndThen(Collectors.toList(),
-                        l -> l.isEmpty() ? null : l.get(0)));
+                        l -> l.isEmpty() ? Collections.emptyList() : l.get(0)));
     }
 
     @Override
@@ -41,38 +39,24 @@ private boolean moved;
         getUserAccounts(passport).add(account);
     }
 
-    public void setMoved(boolean result) {
-        this.moved = result;
-    }
-
-    public boolean isMoved() {
-        return this.moved;
+    private Account getAccount(String passport, String requisite) {
+      return getUserAccounts(passport)
+                .stream()
+                .filter(x -> x.getRequisites().equals(requisite))
+                .collect(Collectors.collectingAndThen(Collectors.toList(),
+                        l -> l.isEmpty() ? null : l.get(0)));
     }
 
     @Override
     public boolean transferMoney(String srcPassport, String srcRequisite, String dstPassport, String dstRequisite, double amount) {
-        TreeMap<User, ArrayList<Account>> treeMap = getUserList();
-        treeMap.entrySet()
-                .stream()
-                .filter(x -> x.getKey().getPassport().equals(srcPassport))
-                .forEach(q -> q.getValue()
-                        .stream()
-                        .filter(a -> a.getRequisites().equals(srcRequisite))
-                        .forEach(d -> {
-                            if (d.getValue() >= amount) {
-                                d.setValue(d.getValue() - amount);
-                                treeMap.entrySet()
-                                        .stream()
-                                        .filter(x -> x.getKey().getPassport().equals(dstPassport))
-                                        .forEach(s -> s.getValue()
-                                                .stream()
-                                                .filter(a -> a.getRequisites().equals(dstRequisite))
-                                                .forEach(p -> p.setValue(p.getValue() + amount))
-                                        );
-                                setMoved(true);
-                            }
-                        })
-                );
-        return isMoved();
+        boolean result = false;
+        Account srcAccount = getAccount(srcPassport, srcRequisite);
+        Account dstAccount = getAccount(dstPassport, dstRequisite);
+        if (srcAccount != null && dstAccount != null && srcAccount.getValue() >= amount) {
+            srcAccount.setValue(srcAccount.getValue() - amount);
+            dstAccount.setValue(dstAccount.getValue() + amount);
+            result = true;
+        }
+        return result;
     }
 }
