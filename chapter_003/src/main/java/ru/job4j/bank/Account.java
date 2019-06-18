@@ -6,7 +6,6 @@ package ru.job4j.bank;
  * @since 0.1
  */
 public class Account {
-
     private double value;
     private String requisites;
 
