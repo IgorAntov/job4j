@@ -3,6 +3,7 @@ package ru.job4j.map;
 //import jdk.nashorn.internal.ir.WhileNode;
 import org.junit.Test;
 import java.util.Iterator;
+import java.util.Objects;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -14,25 +15,38 @@ import static org.junit.Assert.assertThat;
  */
 public class SimpleHashMapTest {
 
+    class Key {
+        private int i;
+        public Key(int i) {
+            this.i = i;
+        }
+
+        @Override
+        public int hashCode() {
+            return i;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Key key = (Key) o;
+            return i == key.i;
+        }
+
+        public int getI() {
+            return i;
+        }
+    }
+
     @Test
     public void simpleHashMapTest() {
 
-        class Key {
-            private int i;
-            public Key(int i) {
-                this.i = i;
-            }
-            @Override
-            public int hashCode() {
-                return i;
-            }
-
-            public int getI() {
-                return i;
-            }
-        }
-
-        SimpleHashMap<Key, Integer> simpleHashMap = new SimpleHashMap<>();
+               SimpleHashMap<Key, Integer> simpleHashMap = new SimpleHashMap<>();
         Key first = new Key(1);
         assertThat(simpleHashMap.insert(first, 1), is(true));
         for (int i = 2; i <= 20; i++) {
