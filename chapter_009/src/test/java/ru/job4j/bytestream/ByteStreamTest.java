@@ -19,9 +19,9 @@ public class ByteStreamTest {
         ByteStream byteStream = new ByteStream();
         System.setIn(new ByteArrayInputStream("10".getBytes()));
         boolean isnumber  = byteStream.isNumber(System.in);
-        assertThat(isnumber,is(true));
+        assertThat(isnumber, is(true));
         System.setIn(new ByteArrayInputStream("11".getBytes()));
         isnumber  = byteStream.isNumber(System.in);
-        assertThat(isnumber,is(false));
+        assertThat(isnumber, is(false));
     }
 }
