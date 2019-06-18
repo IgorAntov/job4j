@@ -103,8 +103,7 @@ public class Args {
                 zout.write(buffer);
                 zout.closeEntry();
             }
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
