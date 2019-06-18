@@ -7,6 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.*;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -37,10 +40,11 @@ public class InteractCalcTest {
         InteractCalc interactCalc = new InteractCalc();
         interactCalc.init(new ConsoleInput(inputStream));
         interactCalc.userInterface();
+        char sp =  new DecimalFormatSymbols().getDecimalSeparator();
         assertThat(
                 new String(out.toByteArray()),
                 is("--------------------\n"
-                        + "Result = 0,000000\n"
+                        + "Result = 0" + sp + "000000\n"
                         + "Actions list:\n"
                         + "0. Add\n"
                         + "1. Sub\n"
@@ -50,7 +54,7 @@ public class InteractCalcTest {
                         + "Input action:\n"
                         + "Input value:\n"
                         + "--------------------\n"
-                        + "Result = 10,000000\n"
+                        + "Result = 10" + sp + "000000\n"
                         + "Actions list:\n"
                         + "0. Add\n"
                         + "1. Sub\n"
@@ -60,7 +64,7 @@ public class InteractCalcTest {
                         + "Input action:\n"
                         + "Input value:\n"
                         + "--------------------\n"
-                        + "Result = 5,000000\n"
+                        + "Result = 5" + sp + "000000\n"
                         + "Actions list:\n"
                         + "0. Add\n"
                         + "1. Sub\n"
@@ -70,7 +74,7 @@ public class InteractCalcTest {
                         + "Input action:\n"
                         + "Input value:\n"
                         + "--------------------\n"
-                        + "Result = 15,000000\n"
+                        + "Result = 15" + sp + "000000\n"
                         + "Actions list:\n"
                         + "0. Add\n"
                         + "1. Sub\n"
@@ -80,7 +84,7 @@ public class InteractCalcTest {
                         + "Input action:\n"
                         + "Input value:\n"
                         + "--------------------\n"
-                        + "Result = 5,000000\n"
+                        + "Result = 5" + sp + "000000\n"
                         + "Actions list:\n"
                         + "0. Add\n"
                         + "1. Sub\n"
