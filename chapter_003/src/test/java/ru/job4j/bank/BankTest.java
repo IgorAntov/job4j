@@ -47,7 +47,7 @@ public class BankTest {
         bank.addUser(user);
         Account account = new Account(100.0, "123");
         bank.addAccountToUser("AS12345", account);
-        //bank.getUserAccounts("AS12345").get(0).getRequisites();
+        bank.getUserAccounts("AS12345").get(0).getRequisites();
         assertThat(bank.getUserAccounts("AS12345").get(0).getRequisites(), is("123"));
     }
 
