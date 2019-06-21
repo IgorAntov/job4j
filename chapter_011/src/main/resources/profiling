@@ -1,0 +1,389 @@
+Что сделал и какой результат:
+1. Сделал класс Profiling в нем запустил класс Tracker. Добавил в класс 10000 элементов Item. Далее все удалил. Посмотрел состояние при помощи утилит:
+jmap, jmap -heap, снял снимок памяти heap. И 
+В файл heap.bin  сохранил dump памяти jmap -heap:format=b. 
+То же самое делал командой -dump:format=b,file=<filename>
+Результаты просмотрел в  утилите visualVM. Посмотрел сколько и какие объекты и сколько они заниимают памяти.
+jstat — прошелся по всем ключам -options
+jstack — программа показала, что Deadlock-ов в программе нет.
+
+2. Очистил List и добавил еще раз 10000 элементов Item.
+Запустил утилиты еще раз. Увидел что GC запускался 16 раз. Память old generaton увеличилась с 0,03 Mb До 2,4 Mb.
+  
+Расшифровку параметров брал с сайта:
+https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html
+
+
+Результат
+
+igor@igor-Inspiron-7577:~$ jps
+9943 Profiling
+5784 Main
+9996 Jps
+9932 Launcher
+5997 RemoteMavenServer
+
+igor@igor-Inspiron-7577:~$ sudo jstat -options
+-class
+-compiler
+-gc
+-gccapacity
+-gccause
+-gcmetacapacity
+-gcnew
+-gcnewcapacity
+-gcold
+-gcoldcapacity
+-gcutil
+-printcompilation
+
+igor@igor-Inspiron-7577:~$ sudo jstat -printcompilation 9943
+Compiled  Size  Type Method
+      26     81    1 java/lang/String equals
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcutil 9943
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT   
+  0,00  93,76  62,45   1,25  62,11  65,66      3    0,007     0    0,000    0,007
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcoldcapacity 9943
+   OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT   
+     2560,0      2560,0      2560,0      2560,0     3     0    0,000    0,007
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcold 9943
+   MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT   
+  4864,0   3020,9    512,0    336,2      2560,0          32,0         3     0    0,000    0,007
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcnewcapacity 9943
+  NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX        EC      YGC   FGC 
+    1536,0     1536,0     1536,0    512,0    512,0    512,0    512,0      512,0      512,0     3     0
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcnew 9943
+ S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT  
+ 512,0  512,0    0,0  480,0  7  15  512,0    512,0    319,8      3    0,007
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcmetacapacity 9943
+   MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGCT     GCT   
+       0,0  1056768,0     4864,0        0,0  1048576,0      512,0     3     0    0,000    0,007
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gccause 9943
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC                 
+  0,00  93,76  62,45   1,25     62,11  65,66    3        0,007     0      0,000    0,007   Allocation Failure   No GC  
+             
+igor@igor-Inspiron-7577:~$ sudo jstat -gccapacity 9943
+ NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC 
+  1536,0      1536,0     1536,0  512,0  512,0      512,0     2560,0       2560,0       2560,0       2560,0      0,0 1    056768,0   4864,0      0,0 1048576,0    512,0      3     0
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gc 9943
+ S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT   
+512,0    512,0   0,0   480,0     512,0    319,8       2560,0      32,0      4864,0 3020,9    512,0  336,2      3      0,007      0      0,000    0,007
+
+
+igor@igor-Inspiron-7577:~$ sudo jstat -compiler 9943
+Compiled Failed Invalid   Time   FailedType FailedMethod
+      26      0       0     0,01          0        
+     
+igor@igor-Inspiron-7577:~$ sudo jstat -class 9943
+Loaded  Bytes  Unloaded  Bytes     Time   
+   534  1087,1        0     0,0       0,08
+
+igor@igor-Inspiron-7577:~$ sudo jmap -heap:format=b 9943
+[sudo] пароль для igor: 
+Attaching to process ID 23679, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.161-b12
+Dumping heap to heap.bin ...
+Heap dump file created
+
+igor@igor-Inspiron-7577:~$ sudo jstack -F 9943
+Attaching to process ID 9943, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.161-b12
+Deadlock Detection:
+
+No deadlocks found.
+
+Thread 10433: (state = BLOCKED)
+
+
+Thread 9968: (state = IN_NATIVE)
+ - java.net.SocketInputStream.socketRead0(java.io.FileDescriptor, byte[], int, int, int) @bci=0 (Interpreted frame)
+ - java.net.SocketInputStream.socketRead(java.io.FileDescriptor, byte[], int, int, int) @bci=8, line=116 (Interpreted frame)
+ - java.net.SocketInputStream.read(byte[], int, int, int) @bci=117, line=171 (Interpreted frame)
+ - java.net.SocketInputStream.read(byte[], int, int) @bci=11, line=141 (Interpreted frame)
+ - sun.nio.cs.StreamDecoder.readBytes() @bci=135, line=284 (Interpreted frame)
+ - sun.nio.cs.StreamDecoder.implRead(char[], int, int) @bci=112, line=326 (Interpreted frame)
+ - sun.nio.cs.StreamDecoder.read(char[], int, int) @bci=180, line=178 (Interpreted frame)
+ - java.io.InputStreamReader.read(char[], int, int) @bci=7, line=184 (Interpreted frame)
+ - java.io.BufferedReader.fill() @bci=145, line=161 (Interpreted frame)
+ - java.io.BufferedReader.readLine(boolean) @bci=44, line=324 (Interpreted frame)
+ - java.io.BufferedReader.readLine() @bci=2, line=389 (Interpreted frame)
+ - com.intellij.rt.execution.application.AppMainV2$1.run() @bci=36, line=64 (Interpreted frame)
+
+
+Thread 9967: (state = BLOCKED)
+
+
+Thread 9959: (state = BLOCKED)
+ - java.lang.Object.wait(long) @bci=0 (Interpreted frame)
+ - java.lang.ref.ReferenceQueue.remove(long) @bci=59, line=143 (Interpreted frame)
+ - java.lang.ref.ReferenceQueue.remove() @bci=2, line=164 (Interpreted frame)
+ - java.lang.ref.Finalizer$FinalizerThread.run() @bci=36, line=209 (Interpreted frame)
+
+
+Thread 9958: (state = BLOCKED)
+ - java.lang.Object.wait(long) @bci=0 (Interpreted frame)
+ - java.lang.Object.wait() @bci=2, line=502 (Interpreted frame)
+ - java.lang.ref.Reference.tryHandlePending(boolean) @bci=54, line=191 (Interpreted frame)
+ - java.lang.ref.Reference$ReferenceHandler.run() @bci=1, line=153 (Interpreted frame)
+
+
+Thread 9944: (state = BLOCKED)
+ - java.lang.Thread.sleep(long) @bci=0 (Interpreted frame)
+ - ru.job4j.calcmemory.profiling.Profiling.main(java.lang.String[]) @bci=15, line=18 (Interpreted frame)
+
+
+igor@igor-Inspiron-7577:~$ sudo jmap -heap 9943
+Attaching to process ID 9943, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.161-b12
+
+using thread-local object allocation.
+Parallel GC with 8 thread(s)
+
+Heap Configuration:
+   MinHeapFreeRatio         = 0
+   MaxHeapFreeRatio         = 100
+   MaxHeapSize              = 4194304 (4.0MB)
+   NewSize                  = 1572864 (1.5MB)
+   MaxNewSize               = 1572864 (1.5MB)
+   OldSize                  = 2621440 (2.5MB)
+   NewRatio                 = 2
+   SurvivorRatio            = 8
+   MetaspaceSize            = 21807104 (20.796875MB)
+   CompressedClassSpaceSize = 1073741824 (1024.0MB)
+   MaxMetaspaceSize         = 17592186044415 MB
+   G1HeapRegionSize         = 0 (0.0MB)
+
+Heap Usage:
+PS Young Generation
+Eden Space:
+   capacity = 524288 (0.5MB)
+   used     = 338280 (0.32260894775390625MB)
+   free     = 186008 (0.17739105224609375MB)
+   64.52178955078125% used
+From Space:
+   capacity = 524288 (0.5MB)
+   used     = 491552 (0.468780517578125MB)
+   free     = 32736 (0.031219482421875MB)
+   93.756103515625% used
+To Space:
+   capacity = 524288 (0.5MB)
+   used     = 0 (0.0MB)
+   free     = 524288 (0.5MB)
+   0.0% used
+PS Old Generation
+   capacity = 2621440 (2.5MB)
+   used     = 32768 (0.03125MB)
+   free     = 2588672 (2.46875MB)
+   1.25% used
+
+896 interned Strings occupying 60176 bytes.
+
+igor@igor-Inspiron-7577:~$ sudo jmap 9943
+Attaching to process ID 9943, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.161-b12
+0x0000000000400000	7K	/usr/lib/jvm/java-8-oracle/bin/java
+0x00007ff3246d3000	112K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnet.so
+0x00007ff337398000	125K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libzip.so
+0x00007ff3375b4000	46K	/lib/x86_64-linux-gnu/libnss_files-2.27.so
+0x00007ff3377c6000	94K	/lib/x86_64-linux-gnu/libnsl-2.27.so
+0x00007ff3379e0000	46K	/lib/x86_64-linux-gnu/libnss_nis-2.27.so
+0x00007ff337bec000	38K	/lib/x86_64-linux-gnu/libnss_compat-2.27.so
+0x00007ff337df6000	48K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libinstrument.so
+0x00007ff33c1a3000	221K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libjava.so
+0x00007ff33c3cf000	64K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libverify.so
+0x00007ff33c5de000	30K	/lib/x86_64-linux-gnu/librt-2.27.so
+0x00007ff33c7e6000	1660K	/lib/x86_64-linux-gnu/libm-2.27.so
+0x00007ff33cb84000	16643K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so
+0x00007ff33db81000	1982K	/lib/x86_64-linux-gnu/libc-2.27.so
+0x00007ff33df72000	14K	/lib/x86_64-linux-gnu/libdl-2.27.so
+0x00007ff33e176000	101K	/usr/lib/jvm/java-8-oracle/lib/amd64/jli/libjli.so
+0x00007ff33e38c000	141K	/lib/x86_64-linux-gnu/libpthread-2.27.so
+0x00007ff33e5ab000	166K	/lib/x86_64-linux-gnu/ld-2.27.so
+
+igor@igor-Inspiron-7577:~$ sudo jmap 9943
+Attaching to process ID 9943, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.161-b12
+0x0000000000400000	7K	/usr/lib/jvm/java-8-oracle/bin/java
+0x00007ff3246d3000	112K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnet.so
+0x00007ff337398000	125K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libzip.so
+0x00007ff3375b4000	46K	/lib/x86_64-linux-gnu/libnss_files-2.27.so
+0x00007ff3377c6000	94K	/lib/x86_64-linux-gnu/libnsl-2.27.so
+0x00007ff3379e0000	46K	/lib/x86_64-linux-gnu/libnss_nis-2.27.so
+0x00007ff337bec000	38K	/lib/x86_64-linux-gnu/libnss_compat-2.27.so
+0x00007ff337df6000	48K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libinstrument.so
+0x00007ff33c1a3000	221K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libjava.so
+0x00007ff33c3cf000	64K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libverify.so
+0x00007ff33c5de000	30K	/lib/x86_64-linux-gnu/librt-2.27.so
+0x00007ff33c7e6000	1660K	/lib/x86_64-linux-gnu/libm-2.27.so
+0x00007ff33cb84000	16643K	/usr/lib/jvm/java-8-oracle/jre/lib/amd64/server/libjvm.so
+0x00007ff33db81000	1982K	/lib/x86_64-linux-gnu/libc-2.27.so
+0x00007ff33df72000	14K	/lib/x86_64-linux-gnu/libdl-2.27.so
+0x00007ff33e176000	101K	/usr/lib/jvm/java-8-oracle/lib/amd64/jli/libjli.so
+0x00007ff33e38c000	141K	/lib/x86_64-linux-gnu/libpthread-2.27.so
+0x00007ff33e5ab000	166K	/lib/x86_64-linux-gnu/ld-2.27.so
+
+igor@igor-Inspiron-7577:~$ sudo jmap -heap 9943
+Attaching to process ID 9943, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.161-b12
+
+using thread-local object allocation.
+Parallel GC with 8 thread(s)
+
+Heap Configuration:
+   MinHeapFreeRatio         = 0
+   MaxHeapFreeRatio         = 100
+   MaxHeapSize              = 4194304 (4.0MB)
+   NewSize                  = 1572864 (1.5MB)
+   MaxNewSize               = 1572864 (1.5MB)
+   OldSize                  = 2621440 (2.5MB)
+   NewRatio                 = 2
+   SurvivorRatio            = 8
+   MetaspaceSize            = 21807104 (20.796875MB)
+   CompressedClassSpaceSize = 1073741824 (1024.0MB)
+   MaxMetaspaceSize         = 17592186044415 MB
+   G1HeapRegionSize         = 0 (0.0MB)
+
+Heap Usage:
+PS Young Generation
+Eden Space:
+   capacity = 524288 (0.5MB)
+   used     = 343360 (0.32745361328125MB)
+   free     = 180928 (0.17254638671875MB)
+   65.49072265625% used
+From Space:
+   capacity = 524288 (0.5MB)
+   used     = 0 (0.0MB)
+   free     = 524288 (0.5MB)
+   0.0% used
+To Space:
+   capacity = 524288 (0.5MB)
+   used     = 0 (0.0MB)
+   free     = 524288 (0.5MB)
+   0.0% used
+PS Old Generation
+   capacity = 2621440 (2.5MB)
+   used     = 2513184 (2.396759033203125MB)
+   free     = 108256 (0.103240966796875MB)
+   95.870361328125% used
+
+851 interned Strings occupying 57544 bytes.
+
+igor@igor-Inspiron-7577:~$ sudo jstack -F 9943
+Attaching to process ID 9943, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 25.161-b12
+Deadlock Detection:
+
+No deadlocks found.
+
+Thread 10433: (state = BLOCKED)
+
+
+Thread 9968: (state = IN_NATIVE)
+ - java.net.SocketInputStream.socketRead0(java.io.FileDescriptor, byte[], int, int, int) @bci=0 (Interpreted frame)
+ - java.net.SocketInputStream.socketRead(java.io.FileDescriptor, byte[], int, int, int) @bci=8, line=116 (Interpreted frame)
+ - java.net.SocketInputStream.read(byte[], int, int, int) @bci=117, line=171 (Interpreted frame)
+ - java.net.SocketInputStream.read(byte[], int, int) @bci=11, line=141 (Interpreted frame)
+ - sun.nio.cs.StreamDecoder.readBytes() @bci=135, line=284 (Interpreted frame)
+ - sun.nio.cs.StreamDecoder.implRead(char[], int, int) @bci=112, line=326 (Interpreted frame)
+ - sun.nio.cs.StreamDecoder.read(char[], int, int) @bci=180, line=178 (Interpreted frame)
+ - java.io.InputStreamReader.read(char[], int, int) @bci=7, line=184 (Interpreted frame)
+ - java.io.BufferedReader.fill() @bci=145, line=161 (Interpreted frame)
+ - java.io.BufferedReader.readLine(boolean) @bci=44, line=324 (Interpreted frame)
+ - java.io.BufferedReader.readLine() @bci=2, line=389 (Interpreted frame)
+ - com.intellij.rt.execution.application.AppMainV2$1.run() @bci=36, line=64 (Interpreted frame)
+
+
+Thread 9967: (state = BLOCKED)
+
+
+Thread 9959: (state = BLOCKED)
+ - java.lang.Object.wait(long) @bci=0 (Interpreted frame)
+ - java.lang.ref.ReferenceQueue.remove(long) @bci=59, line=143 (Interpreted frame)
+ - java.lang.ref.ReferenceQueue.remove() @bci=2, line=164 (Interpreted frame)
+ - java.lang.ref.Finalizer$FinalizerThread.run() @bci=36, line=209 (Interpreted frame)
+
+
+Thread 9958: (state = BLOCKED)
+ - java.lang.Object.wait(long) @bci=0 (Interpreted frame)
+ - java.lang.Object.wait() @bci=2, line=502 (Interpreted frame)
+ - java.lang.ref.Reference.tryHandlePending(boolean) @bci=54, line=191 (Interpreted frame)
+ - java.lang.ref.Reference$ReferenceHandler.run() @bci=1, line=153 (Interpreted frame)
+
+
+Thread 9944: (state = BLOCKED)
+ - java.lang.Thread.sleep(long) @bci=0 (Interpreted frame)
+ - ru.job4j.calcmemory.profiling.Profiling.main(java.lang.String[]) @bci=202, line=35 (Interpreted frame)
+
+igor@igor-Inspiron-7577:~$ sudo jstat -class 9943
+Loaded  Bytes  Unloaded  Bytes     Time   
+   535    1088,1        0       0,0       0,08
+
+
+
+igor@igor-Inspiron-7577:~$ sudo jstat -compiler 9943
+Compiled Failed Invalid   Time   FailedType FailedMethod
+      80      0       0       0,29          0    
+         
+igor@igor-Inspiron-7577:~$ sudo jstat -gc 9943
+ S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT   
+512,0    512,0   0,0     0,0      512,0     335,3      2560,0     2454,3   4864,0   3311,0   512,0   362,0    16       0,040     5     0,043      0,083
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gccapacity 9943
+ NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC 
+  1536,0     1536,0     1536,0   512,0   512,0     512,0     2560,0       2560,0       2560,0       2560,0      0,0      1056768,0   4864,0      0,0     1048576,0    512,0     16     5
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gccause 9943
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC                 
+  0,00   0,00  65,49  95,87   68,07    70,70    16      0,040     5       0,043    0,083  Allocation Failure   No GC     
+          
+igor@igor-Inspiron-7577:~$ sudo jstat -gcmetacapacity 9943
+   MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGCT     GCT   
+       0,0  1056768,0     4864,0        0,0  1048576,0      512,0    16     5    0,043    0,083
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcnew 9943
+ S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT  
+ 512,0  512,0    0,0    0,0     1  15   512,0     512,0     335,3    16    0,040
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcnewcapacity 9943
+  NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX        EC      YGC   FGC 
+    1536,0     1536,0         1536,0    512,0      512,0    512,0       512,0      512,0       512,0      16     5
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcold 9943
+   MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT   
+  4864,0   3311,0      512,0    362,0       2560,0       2454,3       16     5      0,043    0,083
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcoldcapacity 9943
+   OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT   
+     2560,0      2560,0         2560,0      2560,0      16     5       0,043    0,083
+
+igor@igor-Inspiron-7577:~$ sudo jstat -gcutil 9943
+  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT   
+  0,00   0,00  65,49  95,87     68,07  70,70     16      0,040     5      0,043    0,083
+
+igor@igor-Inspiron-7577:~$ sudo jstat -printcompilation 9943
+Compiled  Size  Type Method
+      80    275    1 ru/job4j/tracker/storage/Tracker add
+
+igor@igor-Inspiron-7577:~$ sudo jmap -heap:format=b 9943
