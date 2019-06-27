@@ -17,10 +17,10 @@ public class PriorityQueue {
      * @param task задача
      */
     public void put(Task task) {
-        int index = 0;
-        boolean isPut = false;
+        var index = 0;
+        var isPut = false;
         if (this.tasks.size() != 0) {
-            for (Task value: this.tasks) {
+            for (var value: this.tasks) {
                 if (value.getPriority() > task.getPriority()) {
                     tasks.add(index, task);
                     isPut = true;
