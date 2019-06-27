@@ -16,17 +16,17 @@ public class SortUserTest {
 
     @Test
     public void whenSortByAge() {
-        List<User> users = new ArrayList<>(Arrays.asList(
+        List<User> users = List.of(
                 new User("vadim", 25),
                 new User("igor", 30),
                 new User("vasiliy", 5),
-                new User("andrey", 10)));
+                new User("andrey", 10));
 
-        List<User> expect = new ArrayList<>(Arrays.asList(
+        List<User> expect = List.of(
                 new User("vasiliy", 5),
                 new User("andrey", 10),
                 new User("vadim", 25),
-                new User("igor", 30)));
+                new User("igor", 30));
 
         SortUser sortUser = new SortUser();
         Set<User> result = sortUser.sort(users);
@@ -35,17 +35,17 @@ public class SortUserTest {
 
     @Test
     public void whenSortByAllFields() {
-        List<User> users = new ArrayList<>(Arrays.asList(
+        List<User> users = List.of(
                 new User("Сергей", 25),
                 new User("Иван", 30),
                 new User("Сергей", 20),
-                new User("Иван", 25)));
+                new User("Иван", 25));
 
-        List<User> expect = new ArrayList<>(Arrays.asList(
+        List<User> expect = List.of(
                 new User("Иван", 25),
                 new User("Иван", 30),
                 new User("Сергей", 20),
-                new User("Сергей", 25)));
+                new User("Сергей", 25));
 
         SortUser sortUser = new SortUser();
         List<User> result = sortUser.sortByAllFields(users);

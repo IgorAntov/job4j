@@ -33,13 +33,9 @@ public class ConvertList2ArrayTest {
     @Test
     public void when2array2and4Then6() {
         ConvertList2Array list = new ConvertList2Array();
-        List<int[]> arrayList = new ArrayList<>();
-        arrayList.add(new int[]{1, 2});
-        arrayList.add(new int[]{3, 4, 5, 6});
+        List<int[]> arrayList = List.of(new int[]{1, 2}, new int[]{3, 4, 5, 6});
         List<Integer> result = list.convert(arrayList);
-        List<Integer> expect = Arrays.asList(
-                1, 2, 3, 4, 5, 6
-        );
+        List<Integer> expect = List.of(1, 2, 3, 4, 5, 6);
         assertThat(result, is(expect));
     }
 }
