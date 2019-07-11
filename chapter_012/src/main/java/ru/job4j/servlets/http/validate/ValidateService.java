@@ -18,6 +18,10 @@ public class ValidateService implements Validate {
     private final Store store = MemoryStore.getInstance();
     private static final Random RN = new Random();
 
+    private ValidateService() {
+
+    }
+
     public static ValidateService getInstance() {
         return VALIDATE_SERVICE;
     }
