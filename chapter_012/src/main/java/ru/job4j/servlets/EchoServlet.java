@@ -16,7 +16,7 @@ public class EchoServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("text/html");
         PrintWriter writer = new PrintWriter(res.getOutputStream());
-        writer.append("hello world");
+        writer.append("hello world 3");
         writer.flush();
     }
 }
