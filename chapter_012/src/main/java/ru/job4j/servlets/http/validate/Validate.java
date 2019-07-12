@@ -12,12 +12,10 @@ import java.util.List;
 public interface Validate {
     /**
      * Add User to Store
-     * @param name param name
-     * @param login param login
-     * @param email param email
+     * @param user param user
      * @return
      */
-    boolean add(String name, String login, String email);
+    boolean add(User user);
 
     /**
      * Update user in store

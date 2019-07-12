@@ -1,12 +1,10 @@
 package ru.job4j.servlets.http.validate;
 
 import ru.job4j.servlets.http.User;
+import ru.job4j.servlets.http.store.DbStore;
 import ru.job4j.servlets.http.store.MemoryStore;
 import ru.job4j.servlets.http.store.Store;
-
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author Igor Antropov
@@ -15,8 +13,7 @@ import java.util.Random;
  */
 public class ValidateService implements Validate {
     private final static ValidateService VALIDATE_SERVICE = new ValidateService();
-    private final Store store = MemoryStore.getInstance();
-    private static final Random RN = new Random();
+    private final Store store = DbStore.getInstance();
 
     private ValidateService() {
 
@@ -26,8 +23,8 @@ public class ValidateService implements Validate {
         return VALIDATE_SERVICE;
     }
 
-    public boolean add(String name, String login, String email) {
-        return this.store.add(new User(this.generateId(), name, login, email, new Date(System.currentTimeMillis())));
+    public boolean add(User user) {
+        return this.store.add(user);
     }
 
     public boolean update(User user) {
@@ -44,13 +41,5 @@ public class ValidateService implements Validate {
 
     public User findById(String id) {
         return this.store.findById(id);
-    }
-
-    /**
-     * Method generates user id
-     * @return
-     */
-    private String generateId() {
-        return String.valueOf(System.currentTimeMillis() + (long) RN.nextInt());
     }
 }

@@ -2,6 +2,7 @@ package ru.job4j.servlets.http.store;
 
 import ru.job4j.servlets.http.User;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -25,7 +26,7 @@ public class MemoryStore implements Store {
 
     public boolean add(User user) {
         this.users.add(user);
-       return true;
+        return true;
     }
 
     public boolean update(User user) {
@@ -51,7 +52,6 @@ public class MemoryStore implements Store {
             this.users.remove(u);
             result = true;
         }
-
         return result;
     }
 
@@ -62,7 +62,6 @@ public class MemoryStore implements Store {
     public User findById(String s) {
         User result = null;
         Iterator iterator = this.users.iterator();
-
         while (iterator.hasNext()) {
             User u = (User) iterator.next();
             if (u.getId().equals(s)) {
@@ -70,7 +69,6 @@ public class MemoryStore implements Store {
                 break;
             }
         }
-
         return result;
     }
 }

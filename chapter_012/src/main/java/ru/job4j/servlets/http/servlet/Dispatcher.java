@@ -48,7 +48,7 @@ class Dispatcher {
      */
     private BiFunction<Validate, HttpServletRequest, Boolean> toAdd() {
         return (validate, req) ->
-                validate.add(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"));
+                validate.add(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email")));
     }
 
     /**

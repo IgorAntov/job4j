@@ -2,6 +2,7 @@ package ru.job4j.servlets.http;
 
 import java.util.Date;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * @author Igor Antropov
@@ -9,11 +10,12 @@ import java.util.Objects;
  * @since 0.1
  */
 public class User {
-    private final String id;
+    private String id;
     private String name;
     private String login;
     private String email;
     private Date createDate;
+    private static final Random RN = new Random();
 
     public String toString() {
         return "User{id='" + this.id + '\'' + ", name='" + this.name + '\'' + ", login='" + this.login + '\'' + ", email='" + this.email + '\'' + ", createDate=" + this.createDate + '}';
@@ -34,12 +36,12 @@ public class User {
         return Objects.hash(new Object[]{this.id, this.name, this.login, this.email, this.createDate});
     }
 
-    public User(String id, String name, String login, String email, Date createDate) {
-        this.id = id;
+    public User(String name, String login, String email) {
+        this.id = generateId();
         this.name = name;
         this.login = login;
         this.email = email;
-        this.createDate = createDate;
+        this.createDate = new Date(System.currentTimeMillis());
     }
 
     public User(String id, String name, String login, String email) {
@@ -76,5 +78,17 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    /**
+     * Method generates user id
+     * @return
+     */
+    private String generateId() {
+        return String.valueOf(System.currentTimeMillis() + (long) RN.nextInt());
     }
 }
