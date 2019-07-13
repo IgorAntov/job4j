@@ -23,7 +23,7 @@
 </head>
 <body>
 <p>Update User </p><br>
-<form action = '<%=request.getContextPath()%>/update.jsp' method = "post">
+<form action = '<%=request.getContextPath()%>/WEB-INF/views/update.jsp' method = "post">
     Name:  <input type = 'text' value = "<%=request.getParameter("name")%>" name = "name"/> <br>
     Login: <input type = 'text' value = "<%=request.getParameter("login")%>" name = 'login'/> <br>
     Email: <input type = 'text' value = "<%=request.getParameter("email")%>" name = 'email'/> <br>

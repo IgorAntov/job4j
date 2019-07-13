@@ -25,7 +25,7 @@
     <tr>
         <td> <%=user.getName()%>  </td>
         <td> <%=user.getEmail()%>  </td>
-        <td><form action='${pageContext.request.contextPath}/index.jsp' method="post">
+        <td><form action='${pageContext.request.contextPath}/WEB-INF/index.jsp' method="post">
             <input type="hidden" name="id" value=<%=user.getId()%>>
             <input type = 'submit' value = "delete">
         </form>
@@ -35,7 +35,6 @@
                 <input type="hidden" name="name" value="<%=user.getName()%>">
                 <input type="hidden" name="login" value="<%=user.getLogin()%>">
                 <input type="hidden" name="email" value="<%=user.getEmail()%>">
-                <input type="hidden" name="id" value="<%=user.getId()%>">
                 <input type = 'submit' value = "update">
             </form>
         </td>

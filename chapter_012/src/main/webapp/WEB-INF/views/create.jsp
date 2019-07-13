@@ -20,10 +20,10 @@
 <body>
 <p>New User </p></br>
 
-<form action = '<%=request.getContextPath()%>/create.jsp' method = "post">
+<form action = '<%=request.getContextPath()%>/WEB-INF/views/create.jsp' method = "post">
     Name:  <input type = 'text' value = "name" name = "name" /> </br>
     Login: <input type = 'text' value = 'login' name = 'login'/> </br>
-    Email: <input type = 'text' value = 'email' name = 'email' /> </br>
+    Email: <input type = 'text' value = 'email' name = 'email' /> </b>
            <input type = "submit" value = "Save">
     </form>
 </body>
