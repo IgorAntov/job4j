@@ -1,5 +1,6 @@
 <%@ page import="ru.job4j.servlets.http.validate.ValidateService" %>
-<%@ page import="ru.job4j.servlets.http.validate.Validate" %><%--
+<%@ page import="ru.job4j.servlets.http.validate.Validate" %>
+<%@ page import="ru.job4j.servlets.http.User" %><%--
   Created by IntelliJ IDEA.
   User: igor
   Date: 11.07.19
@@ -9,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% final Validate validate = ValidateService.getInstance();
    if(request != null && !request.getParameterMap().isEmpty()) {
-    validate.add(request.getParameter("name"), request.getParameter("login"), request.getParameter("email"));
+    validate.add(new User(request.getParameter("name"), request.getParameter("login"), request.getParameter("email")));
     response.sendRedirect(String.format("%s/index.jsp", request.getContextPath()));
 } %>
 <html>

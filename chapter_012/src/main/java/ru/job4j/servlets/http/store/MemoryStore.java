@@ -45,9 +45,9 @@ public class MemoryStore implements Store {
         return result;
     }
 
-    public boolean delete(String s) {
+    public boolean delete(String id) {
         boolean result = false;
-        User u = this.findById(s);
+        User u = this.findById(id);
         if (u != null) {
             this.users.remove(u);
             result = true;
@@ -59,12 +59,12 @@ public class MemoryStore implements Store {
         return this.users;
     }
 
-    public User findById(String s) {
+    public User findById(String id) {
         User result = null;
         Iterator iterator = this.users.iterator();
         while (iterator.hasNext()) {
             User u = (User) iterator.next();
-            if (u.getId().equals(s)) {
+            if (u.getId().equals(id)) {
                 result = u;
                 break;
             }

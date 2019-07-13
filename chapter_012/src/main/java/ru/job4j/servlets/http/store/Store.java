@@ -15,10 +15,10 @@ public interface Store {
 
     boolean update(User user);
 
-    boolean delete(String s);
+    boolean delete(String id);
 
     List<User> findAll();
 
-    User findById(String s);
+    User findById(String id);
 }
 
