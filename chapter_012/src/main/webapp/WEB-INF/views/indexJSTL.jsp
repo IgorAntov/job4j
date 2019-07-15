@@ -38,6 +38,15 @@
 <form action = '${pageContext.request.contextPath}/' method = "post">
     <input type='hidden' name='task' value="add"></br>
     <input type = "submit" value = "Add User">
+</form></body></br>
+<p>File Upload</p></br>
+<form method="post" action = '${pageContext.request.contextPath}/' enctype="multipart/form-data">
+    Select file to upload: <input type="file" name="file" size="60" /></br>
+    <br /> <input type="submit" value="Upload" />
 </form>
+Click on the link to download:</br>
+<c:forEach items="${listFiles}" var="file">
+    <a href="${pageContext.request.contextPath}/?fileName=<c:out value="${file.name}"></c:out>">Download Link: <c:out value="${file.name}"></c:out></a></br>
+</c:forEach>
 </body>
 </html>

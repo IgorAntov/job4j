@@ -6,6 +6,8 @@ import ru.job4j.servlets.http.validate.Validate;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +21,7 @@ import java.util.function.BiFunction;
 class Dispatcher {
     private final Map<String, BiFunction<Validate, HttpServletRequest, Boolean>> dispatch = new HashMap<>();
     private final Map<String, JSTLFunction<Validate, HttpServletRequest, HttpServletResponse, Boolean>> dispatchJSTL = new HashMap<>();
+    private final static String SAVE_DIR = "uploadFiles";
 
     @FunctionalInterface
     public interface JSTLFunction<T, U, E, R> {
@@ -59,6 +62,26 @@ class Dispatcher {
         this.loadJSTL("add", toAddJSTL());
         this.loadJSTL("delete", toDeleteJSTL());
         this.loadJSTL("update", toUpdateJSTL());
+        this.loadJSTL("upload", toUpload());
+    }
+
+     /**
+     * Upload file task
+     * @return task status
+     */
+    private JSTLFunction<Validate, HttpServletRequest, HttpServletResponse, Boolean> toUpload() {
+        return (validate, request, response) -> {
+            String appPath = request.getServletContext().getRealPath("");
+            String savePath = appPath + File.separator + SAVE_DIR;
+            File fileSaveDir = new File(savePath);
+            if (!fileSaveDir.exists()) {
+                fileSaveDir.mkdir();
+            }
+            Part part = request.getPart("file");
+            String fileName = part.getSubmittedFileName();
+            part.write(savePath + File.separator + fileName);
+            return true;
+        };
     }
 
     /**
