@@ -1,4 +1,4 @@
-<%@ page import="ru.job4j.servlets.http.User" %>
+<%@ page import="ru.job4j.servlets.http.servlet.models.User" %>
 <%@ page import="ru.job4j.servlets.http.validate.Validate" %>
 <%@ page import="ru.job4j.servlets.http.validate.ValidateService" %><%--
   Created by IntelliJ IDEA.
