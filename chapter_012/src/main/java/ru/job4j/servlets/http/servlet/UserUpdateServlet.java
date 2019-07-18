@@ -1,6 +1,6 @@
 package ru.job4j.servlets.http.servlet;
 
-import ru.job4j.servlets.http.User;
+import ru.job4j.servlets.http.servlet.models.User;
 import ru.job4j.servlets.http.validate.Validate;
 import ru.job4j.servlets.http.validate.ValidateService;
 

@@ -1,8 +1,7 @@
 package ru.job4j.servlets.http.store;
 
-import ru.job4j.servlets.http.User;
+import ru.job4j.servlets.http.servlet.models.User;
 
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

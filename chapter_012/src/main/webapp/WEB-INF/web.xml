@@ -33,9 +33,44 @@
         <servlet-class>ru.job4j.servlets.http.servlet.DownloadServlet</servlet-class>
         <load-on-startup>5</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>SigninController</servlet-name>
+        <servlet-class>ru.job4j.servlets.http.servlet.SigninController</servlet-class>
+        <load-on-startup>6</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>LogOut</servlet-name>
+        <servlet-class>ru.job4j.servlets.http.servlet.LogOut</servlet-class>
+        <load-on-startup>7</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>GetImage</servlet-name>
+        <servlet-class>ru.job4j.servlets.http.servlet.GetImage</servlet-class>
+        <load-on-startup>7</load-on-startup>
+    </servlet>
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>ru.job4j.servlets.http.servlet.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <servlet-mapping>
+        <servlet-name>LogOut</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetImage</servlet-name>
+        <url-pattern>/image</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserController</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SigninController</servlet-name>
+        <url-pattern>/signin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EchoServlet</servlet-name>

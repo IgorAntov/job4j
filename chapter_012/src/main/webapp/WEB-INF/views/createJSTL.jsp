@@ -17,7 +17,12 @@
     Name:  <input type = 'text' value = 'name' name = "name" /> </br>
     Login: <input type = 'text' value = 'login' name = 'login'/> </br>
     Email: <input type = 'text' value = 'email' name = 'email' /> </br>
-           <input type='hidden' name='task' value="add"> </br>
+    <select name="role">
+        <option value="All">All Actions allowed</option>
+        <option value="Update">Update User Role</option>
+        <option value="None">Unprivileged Role</option>
+    </select>
+    <input type='hidden' name='task' value="add"> </br>
     <input type = "submit" value = "Save">
 </form>
 </body>

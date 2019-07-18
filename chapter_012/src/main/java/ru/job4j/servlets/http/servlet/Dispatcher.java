@@ -1,6 +1,6 @@
 package ru.job4j.servlets.http.servlet;
 
-import ru.job4j.servlets.http.User;
+import ru.job4j.servlets.http.servlet.models.User;
 import ru.job4j.servlets.http.validate.Validate;
 
 import javax.servlet.ServletException;
@@ -90,7 +90,7 @@ class Dispatcher {
      */
     private BiFunction<Validate, HttpServletRequest, Boolean> toAdd() {
         return (validate, req) ->
-                validate.add(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email")));
+                validate.add(new User(req.getParameter("name"), req.getParameter("login"), req.getParameter("email"), req.getParameter("role")));
     }
 
     /**
@@ -102,8 +102,12 @@ class Dispatcher {
             boolean result = false;
             if (request.getParameter("task") != null && request.getParameter("task").equals("add")) {
                 if (request.getParameter("name") != null) {
-                    result = validate.add(new User(request.getParameter("name"), request.getParameter("login"), request.getParameter("email")));
-                    forwardToUserList(validate, request, response);
+                    result = validate.add(new User(request.getParameter("name"), request.getParameter("login"), request.getParameter("email"), request.getParameter("role")));
+                    if (result) {
+                        forwardToUserList(validate, request, response);
+                    } else {
+                        request.getRequestDispatcher("/WEB-INF/views/createJSTL.jsp").forward(request, response);
+                    }
                 }
                 request.getRequestDispatcher("/WEB-INF/views/createJSTL.jsp").forward(request, response);
             }
@@ -147,6 +151,7 @@ class Dispatcher {
             u.setName(req.getParameter("name"));
             u.setLogin(req.getParameter("login"));
             u.setEmail(req.getParameter("email"));
+            u.setRole(req.getParameter("role"));
             return validate.update(u);
         };
     }
@@ -164,6 +169,7 @@ class Dispatcher {
                     u.setName(request.getParameter("name"));
                     u.setLogin(request.getParameter("login"));
                     u.setEmail(request.getParameter("email"));
+                    u.setRole(request.getParameter("role"));
                     result =  validate.update(u);
                     forwardToUserList(validate, request, response);
                 }

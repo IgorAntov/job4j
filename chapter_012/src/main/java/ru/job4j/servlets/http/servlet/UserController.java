@@ -39,7 +39,9 @@ public class UserController extends HttpServlet {
         if (contentType != null && contentType.startsWith("multipart/form-data")) {
             dispatcher.getJSTL("upload", validate, request, response);
         }
-
+        if (contentType != null && contentType.startsWith("image/png")) {
+            request.getRequestDispatcher("/image").forward(request, response);
+        }
         if (request.getParameter("fileName") != null) {
             request.getRequestDispatcher("/download").forward(request, response);
         }

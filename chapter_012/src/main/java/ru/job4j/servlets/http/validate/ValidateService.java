@@ -1,8 +1,7 @@
 package ru.job4j.servlets.http.validate;
 
-import ru.job4j.servlets.http.User;
+import ru.job4j.servlets.http.servlet.models.User;
 import ru.job4j.servlets.http.store.DbStore;
-import ru.job4j.servlets.http.store.MemoryStore;
 import ru.job4j.servlets.http.store.Store;
 import java.util.List;
 

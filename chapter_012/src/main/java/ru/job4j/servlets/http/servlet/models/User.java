@@ -1,4 +1,4 @@
-package ru.job4j.servlets.http;
+package ru.job4j.servlets.http.servlet.models;
 
 import java.util.Date;
 import java.util.Objects;
@@ -15,6 +15,7 @@ public class User {
     private String login;
     private String email;
     private Date createDate;
+    private String role;
     private static final Random RN = new Random();
 
     public String toString() {
@@ -36,19 +37,21 @@ public class User {
         return Objects.hash(new Object[]{this.id, this.name, this.login, this.email, this.createDate});
     }
 
-    public User(String name, String login, String email) {
+    public User(String name, String login, String email, String role) {
         this.id = generateId();
         this.name = name;
         this.login = login;
         this.email = email;
+        this.role = role;
         this.createDate = new Date(System.currentTimeMillis());
     }
 
-    public User(String id, String name, String login, String email) {
+    public User(String id, String name, String login, String email, String role) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
+        this.role = role;
         this.createDate = null;
     }
 
@@ -84,6 +87,13 @@ public class User {
         this.createDate = createDate;
     }
 
+       public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
     /**
      * Method generates user id
      * @return
