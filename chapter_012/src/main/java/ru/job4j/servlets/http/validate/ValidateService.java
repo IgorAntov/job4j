@@ -11,14 +11,14 @@ import java.util.List;
  * @since 0.1
  */
 public class ValidateService implements Validate {
-    private final static ValidateService VALIDATE_SERVICE = new ValidateService();
+    private final static Validate VALIDATE_SERVICE = new ValidateService();
     private final Store store = DbStore.getInstance();
 
     private ValidateService() {
 
     }
 
-    public static ValidateService getInstance() {
+    public static Validate getInstance() {
         return VALIDATE_SERVICE;
     }
 
