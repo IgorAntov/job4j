@@ -50,7 +50,7 @@ public class UserCreateServletTest {
         when(ValidateService.getInstance()).thenReturn(validate);
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
-        validate.add(new User("name", "","",""));
+        validate.add(new User("name", "", "", ""));
         when(req.getParameter("id")).thenReturn("1");
         when(req.getParameter("name")).thenReturn("Igor");
         new UserUpdateServlet().doPost(req, resp);
@@ -64,8 +64,8 @@ public class UserCreateServletTest {
         when(ValidateService.getInstance()).thenReturn(validate);
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse resp = mock(HttpServletResponse.class);
-        validate.add(new User("name1", "","",""));
-        validate.add(new User("name2", "","",""));
+        validate.add(new User("name1", "", "", ""));
+        validate.add(new User("name2", "", "", ""));
         when(req.getParameter("id")).thenReturn("1");
         new UserServlet().doPost(req, resp);
         Assert.assertThat(validate.findAll().iterator().next().getName(), is("name2"));
