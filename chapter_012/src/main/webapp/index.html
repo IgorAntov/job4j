@@ -8,13 +8,33 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            el_email = $("#email");
+            el_pwd = $("#pwd");
+            el_name = $("#name");
+            el_surname = $("#surname");
+            if (el_email.val() == '') {
+                alert("Please " + el_email.attr('placeholder')); return false;
+            }
+            if (el_pwd.val() == '') {
+                alert("Please " + el_pwd.attr('placeholder')); return false;
+            }
+            if (el_name.val() == '') {
+                alert("Please " + el_name.attr('placeholder')); return false;
+            }
+            if (el_surname.val() == '') {
+                alert("Please " + el_surname.attr('placeholder')); return false;
+            }
+            return false;
+        }
+    </script>
 </head>
 <body>
-
 <div class="container-fluid">
     <h1>My First Bootstrap Page</h1>
 
-    <form action="/action_page.php" style="width:300px">
+    <form action="" style="width:300px" id="myForm">
         <div class="form-group">
 
             <label for="email">Email address:</label>
@@ -41,17 +61,17 @@
         </div>
         <div class="form-group">
             <label>Sex:</label>
-            <label class="radio-inline"><input type="radio" name="optradio" checked>Male</label>
-            <label class="radio-inline"><input type="radio" name="optradio">Female</label>
+            <label class="radio-inline"><input type="radio" name="optradio" checked value="Male" >Male</label>
+            <label class="radio-inline"><input type="radio" name="optradio" value="Female">Female</label>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>
     </form>
 </div>
 
 <div class="container">
     <h2>My Table</h2>
     <p>Table information</p>
-    <table class="table table-bordered">
+    <table class="table table-bordered" id='table'>
         <thead>
         <tr>
             <th>Name</th>
