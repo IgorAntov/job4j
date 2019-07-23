@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,61 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-       /*Form validation*/
+        /*filling the table with data from the query*/
+        function fillRows() {
+            $.ajax({
+                type: "GET",
+                url: "/chapter_012/json",
+                dataType: 'json',
+                complete: function (data) {
+                    var users = JSON.parse(data.responseText);
+                    var table2 ="";
+                    for (var i = 0; i != users.length; i++) {
+                        table2 += "<tr><td>" + users[i].name + "</td><td>" + users[i].surname + "</td><td>" + users[i].email + "</td><td>" + users[i].sex + "</td><td>" + users[i].comment +"</td></tr>";
+                    }
+                    $('#table tr:last').after(table2);
+                },
+                error: function () {
+                    alert('error')
+                }
+            });
+            return false;
+        }
+        /*Send data from the form to server*/
+        function sendData() {
+            if (validate()) {
+                var user = new Object();
+                user.email = $('#email').val();
+                user.name = $('#name').val();
+                user.surname = $('#surname').val();
+                user.comment = $('#comment').val();
+                user.sex = $('input[name=optradio]:checked', '#myForm').val();
+                $.ajax({
+                    type: "POST",
+                    url: "/chapter_012/json",
+                    dataType: 'json',
+                    data: JSON.stringify(user),
+                    complete: function (data) {
+                        getdata(data);
+                    },
+                    error: function () {
+                        alert('error')
+                    }
+                });
+            }
+            return false;
+        }
+        /*Insert data to Table in the end*/
+        function getdata(data) {
+            var email = JSON.parse(data.responseText).email;
+            var name = JSON.parse(data.responseText).name;
+            var surname = JSON.parse(data.responseText).surname;
+            var comment = JSON.parse(data.responseText).comment;
+            var sex = JSON.parse(data.responseText).sex;
+            var table2 = "<tr><td>" + name + "</td><td>" + surname + "</td><td>" + email + "</td><td>" + sex + "</td><td>" + comment +"</td></tr>";
+            $('#table tr:last').after(table2);
+        }
+        /*Form validation*/
         function validate() {
             el_email = $("#email");
             el_pwd = $("#pwd");
@@ -75,13 +130,18 @@
             <label class="radio-inline"><input type="radio" name="optradio" checked value="Male" >Male</label>
             <label class="radio-inline"><input type="radio" name="optradio" value="Female">Female</label>
         </div>
-        <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>
+        <button type="button" class="btn btn-default" onclick="sendData();">Submit</button>
     </form>
 </div>
 
 <div class="container">
     <button type="button" class="btn btn-default" onclick="addRow();">Add to table</button>
 </div>
+
+<div class="container">
+    <button type="button" class="btn btn-default" onclick="fillRows();">Fill table from store</button>
+</div>
+
 
 <div class="container">
     <h2>My Table</h2>
