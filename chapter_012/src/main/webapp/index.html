@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
+       /*Form validation*/
         function validate() {
             el_email = $("#email");
             el_pwd = $("#pwd");
@@ -27,23 +27,25 @@
             if (el_surname.val() == '') {
                 alert("Please " + el_surname.attr('placeholder')); return false;
             }
-            return false;
+            return true;
         }
+        /*Fill the table with data from the query*/
         function addRow() {
             var name = $('#name').val();
             var surname = $('#surname').val();
             var email = $('#email').val();
             var sex = $('input[name=optradio]:checked', '#myForm').val();
             var desc = $('#comment').val();
-            $('#table tr:last').after('<tr><td>' + name +'</td><td>' + surname +'</td><td>' + email +'</td><td>' + sex +'</td><td>' + desc +'</td></tr>');
+            $('#table tr:last').after('<tr><td>' + name + '</td><td>' + surname + '</td><td>' + email + '</td><td>' + sex + '</td><td>' + desc + '</td></tr>');
         }
+
     </script>
 </head>
 <body>
 <div class="container-fluid">
     <h1>My First Bootstrap Page</h1>
 
-    <form action="" style="width:300px" id="myForm">
+    <form action="/json" style="width:300px" id="myForm">
         <div class="form-group">
 
             <label for="email">Email address:</label>
@@ -78,7 +80,7 @@
 </div>
 
 <div class="container">
-    <button type="button" class="btn btn-default" onclick="addRow()">Add to table</button>
+    <button type="button" class="btn btn-default" onclick="addRow();">Add to table</button>
 </div>
 
 <div class="container">
