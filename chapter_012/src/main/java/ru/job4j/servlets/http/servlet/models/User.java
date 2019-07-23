@@ -16,6 +16,8 @@ public class User {
     private String email;
     private Date createDate;
     private String role;
+    private String country;
+    private String city;
     private static final Random RN = new Random();
 
     public String toString() {
@@ -91,13 +93,30 @@ public class User {
         this.createDate = createDate;
     }
 
-       public String getRole() {
+    public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getCountry() {
+        return this.country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     /**
      * Method generates user id
      * @return

@@ -1,6 +1,7 @@
 package ru.job4j.servlets.http.servlet;
 
 import ru.job4j.servlets.http.servlet.models.User;
+import ru.job4j.servlets.http.store.DbStore;
 import ru.job4j.servlets.http.validate.Validate;
 
 import javax.servlet.ServletException;
@@ -65,7 +66,7 @@ class Dispatcher {
         this.loadJSTL("upload", toUpload());
     }
 
-     /**
+    /**
      * Upload file task
      * @return task status
      */
@@ -102,7 +103,10 @@ class Dispatcher {
             boolean result = false;
             if (request.getParameter("task") != null && request.getParameter("task").equals("add")) {
                 if (request.getParameter("name") != null) {
-                    result = validate.add(new User(request.getParameter("name"), request.getParameter("login"), request.getParameter("email"), request.getParameter("role")));
+                    User user = new User(request.getParameter("name"), request.getParameter("login"), request.getParameter("email"), request.getParameter("role"));
+                    user.setCountry(DbStore.getInstance().findCountryById(request.getParameter("country")));
+                    user.setCity(request.getParameter("city"));
+                    result = validate.add(user);
                     if (result) {
                         forwardToUserList(validate, request, response);
                     } else {

@@ -31,10 +31,11 @@ public class AuthFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         }
         if (session.getAttribute("role") == null) {
-        //    ((HttpServletResponse) servletResponse).sendRedirect(String.format("%s/signin", request.getContextPath()));
-            request.getRequestDispatcher("/WEB-INF/views/loginView.jsp").forward(servletRequest, servletResponse);
+            if(!servletResponse.isCommitted()) {
+                request.getRequestDispatcher("/WEB-INF/views/loginView.jsp").forward(servletRequest, servletResponse);
+            }
         }
-       filterChain.doFilter(request, servletResponse);
+        filterChain.doFilter(request, servletResponse);
     }
 
     @Override

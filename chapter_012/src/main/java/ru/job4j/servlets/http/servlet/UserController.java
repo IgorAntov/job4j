@@ -1,5 +1,6 @@
 package ru.job4j.servlets.http.servlet;
 
+import ru.job4j.servlets.http.store.DbStore;
 import ru.job4j.servlets.http.validate.Validate;
 import ru.job4j.servlets.http.validate.ValidateService;
 
@@ -32,6 +33,7 @@ public class UserController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("countries", DbStore.getInstance().getCountries());
         if (request.getParameter("task") != null) {
             dispatcher.getJSTL(request.getParameter("task"), validate, request, response);
         }
@@ -47,7 +49,9 @@ public class UserController extends HttpServlet {
         }
         request.setAttribute("listFiles", getFileList(request));
         request.setAttribute("users", validate.findAll());
-        request.getRequestDispatcher("/WEB-INF/views/indexJSTL.jsp").forward(request, response);
+        if(!response.isCommitted()) {
+            request.getRequestDispatcher("/WEB-INF/views/indexJSTL.jsp").forward(request, response);
+        }
     }
 
     private File[] getFileList(HttpServletRequest request) {
