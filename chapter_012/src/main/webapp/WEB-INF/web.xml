@@ -23,11 +23,11 @@
         <servlet-class>ru.job4j.servlets.http.servlet.UserUpdateServlet</servlet-class>
         <load-on-startup>3</load-on-startup>
     </servlet>
-    <servlet>
+<!--    <servlet>
         <servlet-name>UserController</servlet-name>
         <servlet-class>ru.job4j.servlets.http.servlet.UserController</servlet-class>
         <load-on-startup>1</load-on-startup>
-    </servlet>
+    </servlet>-->
     <servlet>
         <servlet-name>DownloadServlet</servlet-name>
         <servlet-class>ru.job4j.servlets.http.servlet.DownloadServlet</servlet-class>
@@ -58,7 +58,22 @@
         <servlet-class>ru.job4j.servlets.http.servlet.CityList</servlet-class>
         <load-on-startup>10</load-on-startup>
     </servlet>
-
+    <servlet>
+        <servlet-name>HallPlace</servlet-name>
+        <servlet-class>ru.job4j.servlets.http.cinema.PlaceControl</servlet-class>
+        <load-on-startup>11</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountControl</servlet-name>
+        <servlet-class>ru.job4j.servlets.http.cinema.AccountControl</servlet-class>
+        <load-on-startup>12</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>HallStatus</servlet-name>
+        <servlet-class>ru.job4j.servlets.http.cinema.HallStatus</servlet-class>
+        <load-on-startup>13</load-on-startup>
+    </servlet>
+<!--
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>ru.job4j.servlets.http.servlet.AuthFilter</filter-class>
@@ -66,8 +81,19 @@
     <filter-mapping>
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
+    </filter-mapping>-->
+    <servlet-mapping>
+        <servlet-name>HallStatus</servlet-name>
+        <url-pattern>/hallstatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountControl</servlet-name>
+        <url-pattern>/account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HallPlace</servlet-name>
+        <url-pattern>/hall</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CityList</servlet-name>
         <url-pattern>/cities</url-pattern>
@@ -85,10 +111,10 @@
         <servlet-name>GetImage</servlet-name>
         <url-pattern>/image</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+<!--    <servlet-mapping>
         <servlet-name>UserController</servlet-name>
         <url-pattern>/</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>SigninController</servlet-name>
         <url-pattern>/signin</url-pattern>

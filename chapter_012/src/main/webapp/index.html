@@ -1,178 +1,96 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script>
-        /*filling the table with data from the query*/
-        function fillRows() {
-            $.ajax({
-                type: "GET",
-                url: "/chapter_012/json",
-                dataType: 'json',
-                complete: function (data) {
-                    var users = JSON.parse(data.responseText);
-                    var table2 ="";
-                    for (var i = 0; i != users.length; i++) {
-                        table2 += "<tr><td>" + users[i].name + "</td><td>" + users[i].surname + "</td><td>" + users[i].email + "</td><td>" + users[i].sex + "</td><td>" + users[i].comment +"</td></tr>";
-                    }
-                    $('#table tr:last').after(table2);
-                },
-                error: function () {
-                    alert('error')
-                }
-            });
-            return false;
-        }
-        /*Send data from the form to server*/
-        function sendData() {
-            if (validate()) {
-                var user = new Object();
-                user.email = $('#email').val();
-                user.name = $('#name').val();
-                user.surname = $('#surname').val();
-                user.comment = $('#comment').val();
-                user.sex = $('input[name=optradio]:checked', '#myForm').val();
-                $.ajax({
-                    type: "POST",
-                    url: "/chapter_012/json",
-                    dataType: 'json',
-                    data: JSON.stringify(user),
-                    complete: function (data) {
-                        getdata(data);
-                    },
-                    error: function () {
-                        alert('error')
-                    }
-                });
-            }
-            return false;
-        }
-        /*Insert data to Table in the end*/
-        function getdata(data) {
-            var email = JSON.parse(data.responseText).email;
-            var name = JSON.parse(data.responseText).name;
-            var surname = JSON.parse(data.responseText).surname;
-            var comment = JSON.parse(data.responseText).comment;
-            var sex = JSON.parse(data.responseText).sex;
-            var table2 = "<tr><td>" + name + "</td><td>" + surname + "</td><td>" + email + "</td><td>" + sex + "</td><td>" + comment +"</td></tr>";
-            $('#table tr:last').after(table2);
-        }
-        /*Form validation*/
-        function validate() {
-            el_email = $("#email");
-            el_pwd = $("#pwd");
-            el_name = $("#name");
-            el_surname = $("#surname");
-            if (el_email.val() == '') {
-                alert("Please " + el_email.attr('placeholder')); return false;
-            }
-            if (el_pwd.val() == '') {
-                alert("Please " + el_pwd.attr('placeholder')); return false;
-            }
-            if (el_name.val() == '') {
-                alert("Please " + el_name.attr('placeholder')); return false;
-            }
-            if (el_surname.val() == '') {
-                alert("Please " + el_surname.attr('placeholder')); return false;
-            }
-            return true;
-        }
-        /*Fill the table with data from the query*/
-        function addRow() {
-            var name = $('#name').val();
-            var surname = $('#surname').val();
-            var email = $('#email').val();
-            var sex = $('input[name=optradio]:checked', '#myForm').val();
-            var desc = $('#comment').val();
-            $('#table tr:last').after('<tr><td>' + name + '</td><td>' + surname + '</td><td>' + email + '</td><td>' + sex + '</td><td>' + desc + '</td></tr>');
-        }
+<meta charset="UTF-8">
+<title>My Page</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
 
-    </script>
+    function getData() {
+        $.ajax({
+            type: "GET",
+            url: "/chapter_012/hallstatus",
+            dataType: 'json',
+            complete: function (data) {
+                var places = JSON.parse(data.responseText);
+                for (var i = 0; i != places.length; i++) {
+                    $('#'+places[i].place).attr("disabled",true);
+                    $('#'+places[i].place).parent().css("background-color", "red");
+                }
+            },
+            error: function () {
+                alert('error')
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        getData();
+        setInterval(function(){
+            getData();
+        },4000);
+    });
+
+    $(document).ready(function(){
+        $("#btn1").click(function(){
+            var pl = new Object();
+            pl.place = $('input:radio[name=place]:checked').val();
+            pl.status = "selected";
+            pl.desc = $('input:radio[name=place]:checked').next('label:first').html();
+            $.ajax({
+                type: "POST",
+                url: "/chapter_012/hall",
+                dataType: 'json',
+                data: JSON.stringify(pl)
+            });
+        });
+    });
+
+</script>>
 </head>
 <body>
-<div class="container-fluid">
-    <h1>My First Bootstrap Page</h1>
-
-    <form action="/json" style="width:300px" id="myForm">
-        <div class="form-group">
-
-            <label for="email">Email address:</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-        </div>
-        <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter name">
-        </div>
-        <div class="form-group">
-            <label for="surname">Surname:</label>
-            <input type="text" class="form-control" id="surname" placeholder="Enter Surname">
-        </div>
-        <div class="form-group">
-            <label for="comment">Comment:</label>
-            <textarea class="form-control" rows="5" id="comment" placeholder="Enter comments"></textarea>
-        </div>
-        <div class="checkbox">
-            <label><input type="checkbox"> Remember me</label>
-        </div>
-        <div class="form-group">
-            <label>Sex:</label>
-            <label class="radio-inline"><input type="radio" name="optradio" checked value="Male" >Male</label>
-            <label class="radio-inline"><input type="radio" name="optradio" value="Female">Female</label>
-        </div>
-        <button type="button" class="btn btn-default" onclick="sendData();">Submit</button>
-    </form>
-</div>
-
 <div class="container">
-    <button type="button" class="btn btn-default" onclick="addRow();">Add to table</button>
-</div>
-
-<div class="container">
-    <button type="button" class="btn btn-default" onclick="fillRows();">Fill table from store</button>
-</div>
-
-
-<div class="container">
-    <h2>My Table</h2>
-    <p>Table information</p>
-    <table class="table table-bordered" id='table'>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Email</th>
-            <th>Sex</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Igor</td>
-            <td>Antropov</td>
-            <td>igor@example.com</td>
-            <td>Male</td>
-            <td>Student</td>
-        </tr>
-        <tr>
-            <td>Ivan</td>
-            <td>Ivanov</td>
-            <td>ivan@example.com</td>
-            <td>Male</td>
-            <td>Student</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="row pt-3">
+        <h4>
+            Бронирование месте на сеанс
+        </h4>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="width: 120px;">Ряд / Место</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th>1</th>
+                <td><input type="radio" name="place" value="11" id = "11"> <label> Row 1, Place 1 </label></td>
+                <td><input type="radio" name="place" value="12" id = "12"> <label> Row 1, Place 2 </label></td>
+                <td><input type="radio" name="place" value="13" id = "13"> <label> Row 1, Place 3 </label></td>
+            </tr>
+            <tr>
+                <th>2</th>
+                <td><input type="radio" name="place" value="21" id = "21"> <label> Row 2, Place 1 </label></td>
+                <td><input type="radio" name="place" value="22" id = "22"> <label> Row 2, Place 2 </label></td>
+                <td><input type="radio" name="place" value="23" id = "23"> <label> Row 2, Place 3 </label></td>
+            </tr>
+            <tr>
+                <th>3</th>
+                <td><input type="radio" name="place" value="31" id = "31"> <label> Row 3, Place 1 </label></td>
+                <td><input type="radio" name="place" value="32" id = "32"> <label> Row 3, Place 2 </label></td>
+                <td><input type="radio" name="place" value="33" id = "33"> <label> Row 3, Place 3 </label></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row float-right">
+        <button type="button" class="btn btn-success" onclick="window.location.href='payment.html';" id="btn1">Оплатить</button>
+    </div>
 </div>
 </body>
 </html>
