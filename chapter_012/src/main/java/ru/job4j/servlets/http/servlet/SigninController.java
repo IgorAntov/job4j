@@ -17,7 +17,7 @@ import java.io.IOException;
 public class SigninController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(!resp.isCommitted()) {
+        if (!resp.isCommitted()) {
             req.getRequestDispatcher("/WEB-INF/views/loginView.jsp").forward(req, resp);
         }
     }
@@ -30,7 +30,7 @@ public class SigninController extends HttpServlet {
         if (role != null) {
             HttpSession session = req.getSession();
             session.setAttribute("role", role);
-            if(!resp.isCommitted()) {
+            if (!resp.isCommitted()) {
                 req.getRequestDispatcher(String.format("%s/", req.getContextPath())).forward(req, resp);
             }
         } else {

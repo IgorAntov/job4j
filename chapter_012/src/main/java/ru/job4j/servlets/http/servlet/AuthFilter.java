@@ -31,7 +31,7 @@ public class AuthFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         }
         if (session.getAttribute("role") == null) {
-            if(!servletResponse.isCommitted()) {
+            if (!servletResponse.isCommitted()) {
                 request.getRequestDispatcher("/WEB-INF/views/loginView.jsp").forward(servletRequest, servletResponse);
             }
         }

@@ -49,7 +49,7 @@ public class UserController extends HttpServlet {
         }
         request.setAttribute("listFiles", getFileList(request));
         request.setAttribute("users", validate.findAll());
-        if(!response.isCommitted()) {
+        if (!response.isCommitted()) {
             request.getRequestDispatcher("/WEB-INF/views/indexJSTL.jsp").forward(request, response);
         }
     }

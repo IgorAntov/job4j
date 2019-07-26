@@ -64,11 +64,11 @@ public class CinemaStore implements Hall {
                 st.executeUpdate();
             ResultSet rs = st.getGeneratedKeys();
             rs.next();
-            int auto_id = rs.getInt(1);
+            int autoId = rs.getInt(1);
             st2.setString(1, place.getPlace());
             st2.setString(2, place.getStatus());
             st2.setString(3, place.getDesc());
-            st2.setInt(4, auto_id);
+            st2.setInt(4, autoId);
             st2.executeUpdate();
             connection.commit();
         } catch (Exception e) {
@@ -83,7 +83,7 @@ public class CinemaStore implements Hall {
      * @return Places list of hall
      */
     public List<Place> getHallState() {
-        List<Place> hallState= new ArrayList<>();
+        List<Place> hallState = new ArrayList<>();
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement pst = connection.prepareStatement("SELECT * FROM hall");
              ResultSet rs = pst.executeQuery()) {

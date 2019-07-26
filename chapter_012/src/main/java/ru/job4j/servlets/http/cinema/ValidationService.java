@@ -5,7 +5,7 @@ package ru.job4j.servlets.http.cinema;
  * @version $Id$
  * @since 0.1
  */
-public class ValidationService implements HallValidate{
+public class ValidationService implements HallValidate {
     private final static ValidationService VALIDATE_SERVICE = new ValidationService();
 private final Hall cinemaStore = CinemaStore.getInstance();
 
