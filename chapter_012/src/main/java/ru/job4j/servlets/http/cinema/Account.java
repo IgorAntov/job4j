@@ -1,5 +1,7 @@
 package ru.job4j.servlets.http.cinema;
 
+import java.util.Objects;
+
 /**
  * @author Igor Antropov
  * @version $Id$
@@ -23,5 +25,20 @@ public class Account {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(name, account.name) &&
+                Objects.equals(phone, account.phone);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, phone);
     }
 }
