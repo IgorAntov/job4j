@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class JsonServlet extends HttpServlet {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(JsonServlet.class);
-    ConcurrentHashMap<String, JsonUser> store = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, JsonUser> store = new ConcurrentHashMap<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

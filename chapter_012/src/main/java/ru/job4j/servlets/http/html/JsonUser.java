@@ -1,5 +1,7 @@
 package ru.job4j.servlets.http.html;
 
+import java.util.Objects;
+
 /**
  * @author Igor Antropov
  * @version $Id$
@@ -50,5 +52,26 @@ public class JsonUser {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        JsonUser jsonUser = (JsonUser) o;
+        return Objects.equals(email, jsonUser.email)
+                && Objects.equals(name, jsonUser.name)
+                && Objects.equals(surname, jsonUser.surname)
+                && Objects.equals(comment, jsonUser.comment)
+                && Objects.equals(sex, jsonUser.sex);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, name, surname, comment, sex);
     }
 }
